@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
   --bg-dark: #0a0e1a;
@@ -168,6 +170,178 @@ main { padding: 24px; max-width: 1400px; margin: 0 auto; }
 .btn-purple:hover { box-shadow: var(--glow-purple); }
 .btn-red { background: linear-gradient(135deg, #b91c1c, #ef4444); color: #fff; }
 .btn-red:hover { box-shadow: var(--glow-red); }
+
+/* PDF EXPORT BUTTON */
+.btn-pdf {
+  background: linear-gradient(135deg, #be185d, #f43f5e, #f59e0b);
+  color: #fff;
+  margin-left: auto;
+}
+.btn-pdf:hover { box-shadow: 0 0 20px rgba(244,63,94,0.5); }
+
+.tool-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+/* PDF EXPORT LOADING OVERLAY */
+#pdf-export-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(10,14,26,0.85);
+  display: none;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+#pdf-export-overlay.show { display: flex; }
+.pdf-export-box {
+  background: var(--bg-card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 28px 36px;
+  text-align: center;
+  font-family: 'Orbitron', monospace;
+  color: var(--accent-gold);
+  box-shadow: var(--glow-gold);
+}
+.pdf-export-spinner {
+  width: 36px; height: 36px;
+  border: 4px solid rgba(245,158,11,0.2);
+  border-top-color: var(--accent-gold);
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  animation: pdfspin 0.8s linear infinite;
+}
+@keyframes pdfspin { to { transform: rotate(360deg); } }
+
+/* PDF CAPTURE CLONE */
+.pdf-capture-root {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 1000px;
+  background: var(--bg-dark);
+  padding: 24px;
+}
+.pdf-report-header {
+  font-family: 'Orbitron', monospace;
+  padding: 18px 20px;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(139,92,246,0.12), rgba(245,158,11,0.10));
+  border: 1px solid var(--card-border);
+}
+.pdf-report-header .pdf-title {
+  font-size: 22px; font-weight: 900;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  letter-spacing: 1px;
+}
+.pdf-report-header .pdf-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--text-secondary); margin-top: 6px;
+}
+.pdf-report-footer {
+  margin-top: 18px; padding-top: 12px;
+  border-top: 1px solid var(--card-border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; color: var(--text-secondary);
+  text-align: center;
+}
+
+/* ═══════════════ GTU EXAM ANSWER SHEET (light theme PDF) ═══════════════ */
+.examsheet {
+  position: fixed; left: -10000px; top: 0;
+  width: 1000px;
+  background: #ffffff;
+  color: #1e293b;
+  font-family: 'Inter', sans-serif;
+  padding: 28px 32px;
+}
+.examsheet * { box-sizing: border-box; }
+.es-header {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 4px solid #1d4ed8;
+  padding-bottom: 14px; margin-bottom: 18px;
+}
+.es-header .es-brand {
+  font-family: 'Orbitron', monospace; font-weight: 900; font-size: 22px;
+  color: #1d4ed8; letter-spacing: 1px;
+}
+.es-header .es-brand span { color: #f59e0b; }
+.es-header .es-meta {
+  text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #475569;
+}
+.es-titleband {
+  background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+  color: #fff; border-radius: 12px;
+  padding: 12px 18px; margin-bottom: 18px;
+  font-family: 'Orbitron', monospace; font-weight: 800; font-size: 15px;
+  letter-spacing: 0.5px;
+}
+.es-titleband .es-subtitle {
+  font-family: 'Inter', sans-serif; font-weight: 500; font-size: 11px;
+  margin-top: 4px; opacity: 0.9; letter-spacing: 0;
+}
+.es-section { margin-bottom: 16px; }
+.es-section-label {
+  display: inline-block;
+  font-family: 'Orbitron', monospace; font-weight: 800; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: #fff; background: #1d4ed8;
+  padding: 4px 12px; border-radius: 6px 6px 0 0;
+}
+.es-box {
+  border: 1.5px solid #cbd5e1; border-radius: 0 8px 8px 8px;
+  padding: 12px 16px; font-size: 12.5px; line-height: 1.7; color: #334155;
+  background: #f8fafc;
+}
+.es-box.gold   { border-color:#f59e0b; background:#fffbeb; }
+.es-box.green  { border-color:#10b981; background:#ecfdf5; }
+.es-box.purple { border-color:#8b5cf6; background:#f5f3ff; }
+.es-box.red    { border-color:#ef4444; background:#fef2f2; }
+.es-box.teal   { border-color:#14b8a6; background:#f0fdfa; }
+.es-section-label.gold   { background:#f59e0b; }
+.es-section-label.green  { background:#10b981; }
+.es-section-label.purple { background:#8b5cf6; }
+.es-section-label.red    { background:#ef4444; }
+.es-section-label.teal   { background:#14b8a6; }
+
+.es-table { width:100%; border-collapse: collapse; font-size: 11.5px; }
+.es-table th, .es-table td {
+  border: 1px solid #cbd5e1; padding: 5px 8px; text-align: center;
+}
+.es-table th { background:#1d4ed8; color:#fff; font-family:'JetBrains Mono',monospace; font-weight:700; }
+.es-table tr:nth-child(even) td { background:#f1f5f9; }
+.es-table td.es-hl { background:#fde68a !important; font-weight:700; }
+.es-table td.es-hl2 { background:#bbf7d0 !important; font-weight:700; }
+
+.es-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.es-imgwrap { text-align:center; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:8px; padding:10px; }
+.es-imgwrap img { max-width:100%; border-radius:6px; }
+
+.es-finalanswer {
+  font-family:'Orbitron',monospace; font-weight:900; font-size: 22px; color:#15803d;
+  text-align:center; padding:14px;
+  background: linear-gradient(135deg,#ecfdf5,#d1fae5);
+  border: 2px solid #10b981; border-radius: 10px;
+}
+.es-finalanswer .es-fa-label { display:block; font-family:'Inter',sans-serif; font-weight:600; font-size:11px; color:#475569; margin-bottom:4px; letter-spacing:1px; text-transform:uppercase; }
+
+.es-cxgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.es-cxbox { text-align:center; border:1.5px solid #cbd5e1; border-radius:8px; padding:10px; background:#f8fafc; }
+.es-cxbox .es-cx-val { font-family:'JetBrains Mono',monospace; font-weight:800; font-size:16px; color:#1d4ed8; }
+.es-cxbox .es-cx-lbl { font-size:10px; color:#64748b; margin-top:2px; text-transform:uppercase; letter-spacing:.5px; }
+
+.es-footer {
+  margin-top:18px; padding-top:10px; border-top:1.5px dashed #cbd5e1;
+  font-size:10px; color:#94a3b8; text-align:center; font-family:'JetBrains Mono',monospace;
+}
+.es-steplog { font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.9; color:#334155; }
+.es-steplog .step-num { color:#1d4ed8; font-weight:800; margin-right:6px; }
 .btn-grey { background: linear-gradient(135deg, #374151, #4b5563); color: #fff; }
 .btn-orange { background: linear-gradient(135deg, #c2410c, #f97316); color: #fff; }
 .btn-teal { background: linear-gradient(135deg, #0f766e, #14b8a6); color: #fff; }
@@ -1367,6 +1541,8 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 </head>
 <body>
 
+<div id="pdf-export-overlay"><div class="pdf-export-box"><div class="pdf-export-spinner"></div>Generating PDF…</div></div>
+
 <div class="toast-container" id="toastContainer"></div>
 
 <header>
@@ -1419,6 +1595,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 1: SORTING ═══ -->
 <div class="tool active" id="tool-0">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(0,'Sorting Visualizer')">📄 Export PDF</button></div>
   <div class="card">
     <div class="card-title">📊 Sorting Visualizer</div>
     <div class="flex flex-wrap gap-12 items-center" style="margin-bottom:16px">
@@ -1489,6 +1666,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 2: KNAPSACK ═══ -->
 <div class="tool" id="tool-1">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(1,'01 Knapsack')">📄 Export PDF</button></div>
   <div class="card">
     <div class="card-title">📦 0/1 Knapsack — DP Table</div>
     <div class="flex gap-12 items-center flex-wrap" style="margin-bottom:16px">
@@ -1535,6 +1713,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 3: MST GRAPH ═══ -->
 <div class="tool" id="tool-2">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(2,'MST Graph Visualizer')">📄 Export PDF</button></div>
   <div class="card">
     <div class="card-title">🕸️ MST Graph Visualizer</div>
     <div class="flex flex-wrap gap-8 items-center" style="margin-bottom:12px">
@@ -1590,6 +1769,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 4: LCS ═══ -->
 <div class="tool" id="tool-3">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(3,'LCS Matrix Tracer')">📄 Export PDF</button></div>
   <div class="card">
     <div class="card-title">🔤 LCS Matrix Tracer</div>
     <div class="flex gap-12 flex-wrap items-center" style="margin-bottom:16px">
@@ -1645,6 +1825,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 5: BINARY SEARCH ═══ -->
 <div class="tool" id="tool-4">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(4,'Binary Search Visualizer')">📄 Export PDF</button></div>
   <div class="card">
     <div class="card-title">🔍 Binary Search Visualizer</div>
     <div class="flex gap-12 flex-wrap items-center" style="margin-bottom:16px">
@@ -1684,6 +1865,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 6: RABIN-KARP ═══ -->
 <div class="tool" id="tool-5">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(5,'Rabin-Karp String Matching')">📄 Export PDF</button></div>
   <div class="card">
     <div class="card-title">⚡ Rabin-Karp String Matching</div>
     <div class="flex gap-12 flex-wrap items-center" style="margin-bottom:16px">
@@ -1742,6 +1924,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 7: QUICK SORT ═══ -->
 <div class="tool" id="tool-6">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(6,'Quick Sort Animator')">📄 Export PDF</button></div>
   <div class="card">
     <div class="card-title">🔀 Quick Sort Animator</div>
     <div class="flex gap-12 flex-wrap items-center" style="margin-bottom:16px">
@@ -1792,6 +1975,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 8: FRACTIONAL KNAPSACK ═══ -->
 <div class="tool" id="tool-7">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(7,'Fractional Knapsack')">📄 Export PDF</button></div>
   <div class="card">
     <div class="card-title">💰 Fractional Knapsack</div>
     <div class="flex gap-12 items-center flex-wrap" style="margin-bottom:16px">
@@ -1841,6 +2025,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 9: ACTIVITY SELECTION ═══ -->
 <div class="tool" id="tool-8">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(8,'Activity Selection')">📄 Export PDF</button></div>
   <div class="card">
     <div class="card-title">📅 Activity Selection (Greedy)</div>
     <div style="overflow-x:auto;margin-bottom:12px">
@@ -1868,6 +2053,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 10: BFS/DFS ═══ -->
 <div class="tool" id="tool-9">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(9,'BFS DFS Graph Traversal')">📄 Export PDF</button></div>
   <div class="card">
     <div class="card-title">🌐 BFS / DFS Graph Traversal</div>
     <div class="flex gap-12 flex-wrap items-center" style="margin-bottom:12px">
@@ -1924,6 +2110,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 11: MATRIX CHAIN MULTIPLICATION ═══ -->
 <div class="tool" id="tool-10">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(10,'Matrix Chain Multiplication')">📄 Export PDF</button></div>
   <div class="module-header purple">
     <div class="module-title purple">🔗 MATRIX CHAIN MULTIPLICATION</div>
     <div class="module-subtitle">Dynamic Programming · Optimal Parenthesization</div>
@@ -2008,6 +2195,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 12: COIN CHANGE ═══ -->
 <div class="tool" id="tool-11">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(11,'Coin Change Problem')">📄 Export PDF</button></div>
   <div class="module-header gold">
     <div class="module-title gold">🪙 COIN CHANGE PROBLEM</div>
     <div class="module-subtitle">Greedy & Dynamic Programming · Minimum Coins</div>
@@ -2086,6 +2274,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 13: JOB SCHEDULING ═══ -->
 <div class="tool" id="tool-12">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(12,'Job Scheduling Problem')">📄 Export PDF</button></div>
   <div class="module-header orange">
     <div class="module-title orange">💼 JOB SCHEDULING PROBLEM</div>
     <div class="module-subtitle">Greedy Algorithm · Maximize Profit with Deadlines</div>
@@ -2145,6 +2334,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 14: DIJKSTRA ═══ -->
 <div class="tool" id="tool-13">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(13,'Dijkstra Shortest Path')">📄 Export PDF</button></div>
   <div class="module-header blue">
     <div class="module-title blue">🗺️ DIJKSTRA'S SHORTEST PATH</div>
     <div class="module-subtitle">Greedy + Priority Queue · Single Source Shortest Path</div>
@@ -2219,6 +2409,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 15: FLOYD WARSHALL ═══ -->
 <div class="tool" id="tool-14">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(14,'Floyd-Warshall Algorithm')">📄 Export PDF</button></div>
   <div class="module-header cyan">
     <div class="module-title cyan">🌐 FLOYD-WARSHALL ALGORITHM</div>
     <div class="module-subtitle">Dynamic Programming · All-Pairs Shortest Paths</div>
@@ -2363,6 +2554,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 19: N-QUEENS ═══ -->
 <div class="tool" id="tool-18">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(18,'N-Queens Backtracking')">📄 Export PDF</button></div>
   <div style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.05));border:1.5px solid rgba(16,185,129,0.3);border-radius:16px;padding:20px;margin-bottom:16px">
     <div style="font-family:Orbitron,monospace;font-size:16px;font-weight:900;color:#34d399;margin-bottom:4px">♟️ N-QUEENS — BACKTRACKING</div>
     <div style="font-size:12px;color:#64748b">Place N queens on N×N board with no attacks — State Space Tree Visualizer</div>
@@ -2551,6 +2743,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 24: BIG-O GROWTH CHART ═══ -->
 <div class="tool" id="tool-24">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(24,'Big-O Growth Rate Animator')">📄 Export PDF</button></div>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
     <span style="font-size:15px;font-weight:800;color:#34d399;letter-spacing:.5px">&#128200; Big-O Growth Rate Animator</span>
     <div class="viz-card-row" style="margin:0">
@@ -2580,6 +2773,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 25: HEAP TREE VISUALIZER ═══ -->
 <div class="tool" id="tool-25">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(25,'Heap Tree Visualizer')">📄 Export PDF</button></div>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
     <span style="font-size:15px;font-weight:800;color:#34d399">&#127795; Heap Tree Visualizer &mdash; Cinematic Step Mode</span>
     <div class="viz-card-row" style="margin:0">
@@ -2632,6 +2826,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 26: RECURRENCE SOLVER ═══ -->
 <div class="tool" id="tool-26">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(26,'Recurrence Tree Animator')">📄 Export PDF</button></div>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
     <span style="font-size:15px;font-weight:800;color:#34d399">&#128260; Recurrence Tree Animator + Master Theorem</span>
     <div class="viz-card-row" style="margin:0">
@@ -2674,6 +2869,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 27: SCS ═══ -->
 <div class="tool" id="tool-27">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(27,'Shortest Common Supersequence')">📄 Export PDF</button></div>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
     <span style="font-size:15px;font-weight:800;color:#34d399">&#128279; Shortest Common Supersequence &mdash; Animated DP</span>
     <div class="viz-card-row" style="margin:0">
@@ -2711,6 +2907,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 28: UNION-FIND / DSU ═══ -->
 <div class="tool" id="tool-28">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(28,'Union-Find DSU')">📄 Export PDF</button></div>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
     <span style="font-size:15px;font-weight:800;color:#34d399">&#128279; Union-Find DSU &mdash; Animated Path Compression</span>
     <div class="viz-card-row" style="margin:0">
@@ -2754,6 +2951,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 29: TOPO SORT + SCC ═══ -->
 <div class="tool" id="tool-29">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(29,'Topological Sort SCC Kosaraju')">📄 Export PDF</button></div>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
     <span style="font-size:15px;font-weight:800;color:#34d399">&#128506; Topological Sort + SCC Kosaraju &mdash; DFS Animated</span>
     <div class="viz-card-row" style="margin:0">
@@ -2807,6 +3005,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 30: BACKTRACKING VISUALIZER ═══ -->
 <div class="tool" id="tool-30">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(30,'Backtracking State Space Tree')">📄 Export PDF</button></div>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
     <span style="font-size:15px;font-weight:800;color:#34d399">&#127919; Backtracking &mdash; State Space Tree + Live Visualization</span>
     <div class="viz-card-row" style="margin:0">
@@ -2861,6 +3060,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 31: BRANCH & BOUND TSP ═══ -->
 <div class="tool" id="tool-31">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(31,'Branch and Bound TSP')">📄 Export PDF</button></div>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
     <span style="font-size:15px;font-weight:800;color:#34d399">&#9992;&#65039; Branch &amp; Bound TSP &mdash; Search Tree Visualizer</span>
     <div class="viz-card-row" style="margin:0">
@@ -2904,6 +3104,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 32: RADIX SORT + COUNTING SORT ═══ -->
 <div class="tool" id="tool-32">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(32,'Radix Sort Counting Sort')">📄 Export PDF</button></div>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
     <span style="font-size:15px;font-weight:800;color:#34d399">&#128290; Radix Sort &amp; Counting Sort &mdash; Cinematic Animation</span>
     <div class="viz-card-row" style="margin:0">
@@ -2950,6 +3151,7 @@ label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
 <!-- ═══ TOOL 33: NP THEORY ═══ -->
 <div class="tool" id="tool-33">
+<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="btn btn-pdf btn-sm" onclick="exportToolPDF(33,'NP Theory')">📄 Export PDF</button></div>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
     <span style="font-size:15px;font-weight:800;color:#34d399">&#129329; NP Theory &mdash; Interactive Universe + Quiz</span>
     <div class="viz-card-row" style="margin:0">
@@ -9983,6 +10185,402 @@ function npAnswerQuiz(chosen){
     if(idx===33){/* NP theory: static HTML */}
   };
 })();
+// ─────────────────────────────────────────────────────────────────────────────
+// GTU EXAM-STYLE PDF EXPORT — structured answer sheet per simulator
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Escape helper
+function esEsc(s){ return String(s===undefined||s===null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// Build one <section> block: label + colored box containing arbitrary inner HTML
+function esSection(label, color, innerHTML){
+  color = color || '';
+  return '<div class="es-section">'
+    +'<div class="es-section-label'+(color?' '+color:'')+'">'+esEsc(label)+'</div>'
+    +'<div class="es-box'+(color?' '+color:'')+'">'+innerHTML+'</div>'
+    +'</div>';
+}
+
+// Build a data table from header array + 2D row array. cellClassFn(r,c,val)=>extra class
+function esTable(headers, rows, cellClassFn){
+  var h='<table class="es-table"><thead><tr>';
+  headers.forEach(function(hd){ h+='<th>'+esEsc(hd)+'</th>'; });
+  h+='</tr></thead><tbody>';
+  rows.forEach(function(row,r){
+    h+='<tr>';
+    row.forEach(function(val,c){
+      var cls=cellClassFn?cellClassFn(r,c,val):'';
+      h+='<td'+(cls?(' class="'+cls+'"'):'')+'>'+esEsc(val)+'</td>';
+    });
+    h+='</tr>';
+  });
+  h+='</tbody></table>';
+  return h;
+}
+
+// Final answer hero box
+function esFinalAnswer(label, value){
+  return '<div class="es-finalanswer"><span class="es-fa-label">'+esEsc(label)+'</span>'+value+'</div>';
+}
+
+// Complexity grid (array of {val,lbl})
+function esComplexityGrid(items){
+  var h='<div class="es-cxgrid">';
+  items.forEach(function(it){
+    h+='<div class="es-cxbox"><div class="es-cx-val">'+esEsc(it.val)+'</div><div class="es-cx-lbl">'+esEsc(it.lbl)+'</div></div>';
+  });
+  h+='</div>';
+  return h;
+}
+
+// Step log list -> styled lines
+function esStepLog(steps){
+  var h='<div class="es-steplog">';
+  steps.forEach(function(s,i){ h+='<div><span class="step-num">Step '+(i+1)+':</span> '+esEsc(s)+'</div>'; });
+  h+='</div>';
+  return h;
+}
+
+// Image (data URL) wrapped box, optional second image for side-by-side
+function esDiagramRow(images){
+  // images: array of {label, dataUrl}
+  if(images.length===1){
+    return '<div class="es-imgwrap"><div style="font-size:10px;color:#64748b;margin-bottom:6px;font-family:JetBrains Mono,monospace">'+esEsc(images[0].label||'')+'</div><img src="'+images[0].dataUrl+'"></div>';
+  }
+  var h='<div class="es-grid2">';
+  images.forEach(function(im){
+    h+='<div class="es-imgwrap"><div style="font-size:10px;color:#64748b;margin-bottom:6px;font-family:JetBrains Mono,monospace">'+esEsc(im.label||'')+'</div><img src="'+im.dataUrl+'"></div>';
+  });
+  h+='</div>';
+  return h;
+}
+
+// Grab a canvas as data URL on a light background (so dark-canvas drawings show up on white)
+function esCanvasToImg(canvasEl, bg){
+  if(!canvasEl||!canvasEl.width||!canvasEl.height) return null;
+  var c=document.createElement('canvas');
+  c.width=canvasEl.width; c.height=canvasEl.height;
+  var ctx=c.getContext('2d');
+  ctx.fillStyle=bg||'#0a0e1a';
+  ctx.fillRect(0,0,c.width,c.height);
+  ctx.drawImage(canvasEl,0,0);
+  return c.toDataURL('image/png');
+}
+
+// Master assembler: builds the full .examsheet DOM node
+function esBuildSheet(title, subtitle, sectionsHTML){
+  var now=new Date();
+  var sheet=document.createElement('div');
+  sheet.className='examsheet';
+  sheet.innerHTML =
+    '<div class="es-header">'
+      +'<div class="es-brand">⚡ ADA <span>ALGORITHM LAB</span></div>'
+      +'<div class="es-meta">GTU · 3150703 — Design &amp; Analysis of Algorithms<br>Generated: '+now.toLocaleString()+'</div>'
+    +'</div>'
+    +'<div class="es-titleband">'+esEsc(title)
+      +(subtitle?'<div class="es-subtitle">'+esEsc(subtitle)+'</div>':'')
+    +'</div>'
+    + sectionsHTML
+    +'<div class="es-footer">Prepared with ADA Algorithm Lab · For revision &amp; exam-practice purposes · Verify against your course material</div>';
+  return sheet;
+}
+
+// ═══════════════════════════════════════════════════════════
+// PER-TOOL DATA COLLECTORS → return sectionsHTML string
+// Each collector reads live state/DOM and renders exam-style sections.
+// Falls back to genericCollector() if no specific collector exists.
+// ═══════════════════════════════════════════════════════════
+
+function esCollect_sorting(){
+  var algo = document.getElementById('sort-algo').value;
+  var algoNames = {bubble:'Bubble Sort',selection:'Selection Sort',insertion:'Insertion Sort',merge:'Merge Sort',heap:'Heap Sort',counting:'Counting Sort',bucket:'Bucket Sort'};
+  var cx = sortComplexities[algo] || {best:'-',avg:'-',worst:'-'};
+  var arr = (sortArray||[]).join(', ');
+  var comparisons = document.getElementById('stat-comparisons').textContent;
+  var swaps = document.getElementById('stat-swaps').textContent;
+  var accesses = document.getElementById('stat-accesses').textContent;
+
+  var s='';
+  s += esSection('Question', '', 'Sort the given array using <b>'+algoNames[algo]+'</b> and show the step-by-step working.');
+  s += esSection('Given Input Array', 'gold', '<div style="font-family:JetBrains Mono,monospace;font-size:14px;text-align:center;letter-spacing:2px">[ '+esEsc(arr)+' ]</div>');
+
+  var img = esCanvasToImg(sortCanvas);
+  if(img) s += esSection('Visualization — Final Arrangement', 'purple', esDiagramRow([{label:'Array bar chart (current state)', dataUrl:img}]));
+
+  s += esSection('Working / Statistics', 'teal', esTable(
+    ['Metric','Value'],
+    [['Algorithm', algoNames[algo]],['Comparisons', comparisons],['Swaps / Shifts', swaps],['Array Accesses', accesses],['Array Size', (sortArray||[]).length]]
+  ));
+
+  var sorted = (sortArray||[]).slice().sort(function(a,b){return a-b;}).join(', ');
+  s += esFinalAnswer('Final Sorted Array', '[ '+esEsc(sorted)+' ]');
+
+  s += esSection('Complexity Analysis', 'green', esComplexityGrid([
+    {val:cx.best,lbl:'Best Case'},{val:cx.avg,lbl:'Average Case'},{val:cx.worst,lbl:'Worst Case'}
+  ]));
+  return s;
+}
+
+function esCollect_knapsack(){
+  var W = parseInt(document.getElementById('ks-capacity').value)||0;
+  var items = ksItems;
+  var s='';
+  s += esSection('Question', '', 'Solve the 0/1 Knapsack problem for capacity <b>W = '+W+'</b> using Dynamic Programming. Find the maximum profit and the items selected.');
+
+  s += esSection('Given Items', 'gold', esTable(
+    ['Item','Weight (w)','Value (v)'],
+    items.map(function(it){ return [it.name, it.w, it.v]; })
+  ));
+
+  // DP table (if solved)
+  var dpCard=document.getElementById('ks-dp-card');
+  var dpTableHtml='';
+  if(dpCard && dpCard.style.display!=='none'){
+    var dpTable=document.getElementById('ks-dp-table');
+    if(dpTable){
+      // Extract DP table into header/rows generically from rendered table
+      var rows=[];
+      var headers=[];
+      var trs=dpTable.querySelectorAll('tr');
+      trs.forEach(function(tr,ri){
+        var cells=[];
+        tr.querySelectorAll('th,td').forEach(function(c){ cells.push(c.textContent.trim()); });
+        if(ri===0) headers=cells; else rows.push(cells);
+      });
+      if(headers.length) dpTableHtml = esTable(headers, rows, function(r,c,val){
+        return (rows[r][0]==='' && c===0) ? '' : '';
+      });
+    }
+  }
+  if(dpTableHtml) s += esSection('DP Table — dp[i][w] = max(dp[i-1][w], dp[i-1][w-wᵢ] + vᵢ)', 'purple', dpTableHtml);
+
+  var resultCard=document.getElementById('ks-result-card');
+  if(resultCard && resultCard.style.display!=='none'){
+    var maxProfit=document.getElementById('ks-max-profit').textContent;
+    var usedW=document.getElementById('ks-weight-used').textContent;
+    var selDivs=document.getElementById('ks-selected-items').querySelectorAll('.value');
+    var selNames=[]; selDivs.forEach(function(d){selNames.push(d.textContent);});
+    s += esSection('Selected Items', 'teal', selNames.length? esTable(['Selected Item'], selNames.map(function(n){return [n];})) : '<i>No items selected.</i>');
+    s += esFinalAnswer('Maximum Profit', maxProfit + ' &nbsp;(Weight used: '+usedW+' / '+W+')');
+  } else {
+    s += esSection('Result', '', '<i>Run "Solve All at Once" before exporting to see the final selected items and max profit.</i>');
+  }
+
+  s += esSection('Complexity Analysis', 'green', esComplexityGrid([
+    {val:'O(n·W)',lbl:'Time'},{val:'O(n·W)',lbl:'Space'},{val:'Pseudo-poly',lbl:'Nature'}
+  ]));
+  return s;
+}
+
+function esCollect_mst(){
+  var nodes=mstNodes, edges=mstEdges;
+  var s='';
+  s += esSection('Question', '', 'Find the Minimum Spanning Tree (MST) of the given graph using <b>Prim\'s</b> or <b>Kruskal\'s</b> algorithm.');
+
+  s += esSection('Given Graph', 'gold', esTable(
+    ['Edge','Vertex 1','Vertex 2','Weight'],
+    edges.map(function(e,i){ return ['e'+(i+1), nodes[e.a]?nodes[e.a].label:e.a, nodes[e.b]?nodes[e.b].label:e.b, e.w]; })
+  ));
+
+  var img=esCanvasToImg(mstCanvas);
+  if(img) s += esSection('Graph / MST Diagram', 'purple', esDiagramRow([{label:'Graph with MST highlighted', dataUrl:img}]));
+
+  var logEl=document.getElementById('mst-steps-log');
+  var steps=[];
+  if(logEl){ logEl.querySelectorAll('div,p,li').forEach(function(el){ var t=el.textContent.trim(); if(t) steps.push(t); }); }
+  if(steps.length) s += esSection('Step-by-Step Working', 'teal', esStepLog(steps));
+
+  var totalEl=document.getElementById('mst-total-weight');
+  var total=totalEl?totalEl.textContent.trim():'';
+  s += esFinalAnswer('Result', total || 'Run Prim\'s or Kruskal\'s MST before exporting');
+
+  s += esSection('Complexity Analysis', 'green', esComplexityGrid([
+    {val:"O(E log V)",lbl:"Prim's (heap)"},{val:"O(E log E)",lbl:"Kruskal's"},{val:'O(V)',lbl:'Space'}
+  ]));
+  return s;
+}
+
+function esCollect_dijkstra(){
+  var nodes=djkNodes, edges=djkEdges;
+  var src=document.getElementById('djk-source');
+  var srcLabel = (src && nodes[parseInt(src.value)||0]) ? nodes[parseInt(src.value)||0].label : '-';
+  var s='';
+  s += esSection('Question', '', 'Find the shortest distance from source vertex <b>'+esEsc(srcLabel)+'</b> to all other vertices using <b>Dijkstra\'s Algorithm</b>.');
+
+  s += esSection('Given Graph', 'gold', esTable(
+    ['Edge','Vertex 1','Vertex 2','Weight'],
+    edges.map(function(e,i){ return ['e'+(i+1), nodes[e.a]?nodes[e.a].label:e.a, nodes[e.b]?nodes[e.b].label:e.b, e.w]; })
+  ));
+
+  var img=esCanvasToImg(djkCanvas);
+  if(img) s += esSection('Shortest Path Tree Diagram', 'purple', esDiagramRow([{label:'Graph with shortest-path edges highlighted', dataUrl:img}]));
+
+  var logEl=document.getElementById('djk-steps');
+  var steps=[];
+  if(logEl){ logEl.querySelectorAll('div,p,li').forEach(function(el){ var t=el.textContent.trim(); if(t) steps.push(t); }); }
+  if(steps.length) s += esSection('Step-by-Step Relaxation', 'teal', esStepLog(steps));
+
+  // distance table
+  s += esSection('Final Distance Table', 'gold', esTable(
+    ['Vertex','Distance from '+esEsc(srcLabel)],
+    nodes.map(function(n,i){ var d=djkNodeDist[i]; return [n.label, (d===undefined||d===Infinity)?'∞':d]; })
+  ));
+
+  var resEl=document.getElementById('djk-path-result');
+  var res=resEl?resEl.textContent.trim():'';
+  s += esFinalAnswer('Shortest Distances', res || 'Run Dijkstra before exporting');
+
+  s += esSection('Complexity Analysis', 'green', esComplexityGrid([
+    {val:'O((V+E) log V)',lbl:'Time (heap)'},{val:'O(V²)',lbl:'Time (array)'},{val:'O(V)',lbl:'Space'}
+  ]));
+  return s;
+}
+
+function esCollect_bfsdfs(){
+  var nodes=bfsNodes, edges=bfsEdges;
+  var algo=document.getElementById('bfsdfs-algo').value;
+  var startIdx=parseInt(document.getElementById('bfsdfs-start').value)||0;
+  var startLabel=(nodes[startIdx]||{}).label||'-';
+  var algoName = algo==='bfs'?'Breadth-First Search (BFS)':'Depth-First Search (DFS)';
+  var s='';
+  s += esSection('Question', '', 'Traverse the given graph starting from vertex <b>'+esEsc(startLabel)+'</b> using <b>'+algoName+'</b> and list the order of visited vertices.');
+
+  s += esSection('Given Graph', 'gold', esTable(
+    ['Edge','Vertex 1','Vertex 2'],
+    edges.map(function(e,i){ return ['e'+(i+1), nodes[e.a]?nodes[e.a].label:e.a, nodes[e.b]?nodes[e.b].label:e.b]; })
+  ));
+
+  var img=esCanvasToImg(bfsCanvas);
+  if(img) s += esSection('Traversal Diagram', 'purple', esDiagramRow([{label:algoName+' tree edges highlighted', dataUrl:img}]));
+
+  var orderEl=document.getElementById('bfsdfs-order');
+  var order = orderEl ? orderEl.textContent.replace(/\s+/g,' ').trim() : '';
+
+  s += esSection('Working', 'teal', '<p>Using a '+(algo==='bfs'?'Queue':'Stack')+', each unvisited neighbor is discovered and processed in order, producing the traversal sequence below.</p>');
+
+  s += esFinalAnswer(algoName+' Order', order || 'Run the traversal before exporting');
+
+  s += esSection('Complexity Analysis', 'green', esComplexityGrid([
+    {val:'O(V+E)',lbl:'Time'},{val:'O(V)',lbl:'Space'},{val:algo==='bfs'?'Queue':'Stack',lbl:'Data Structure'}
+  ]));
+  return s;
+}
+
+// Generic fallback: captures the tool's first card-title as topic, dumps
+// input/result values found in the DOM into a table, plus a canvas image if present.
+function esCollect_generic(toolIdx, title){
+  var tool=document.getElementById('tool-'+toolIdx);
+  var s='';
+  s += esSection('Topic', '', '<b>'+esEsc(title)+'</b> — GTU 3150703 (Design &amp; Analysis of Algorithms)');
+
+  // Inputs
+  var inputRows=[];
+  tool.querySelectorAll('input, select').forEach(function(el){
+    if(el.type==='checkbox'||el.type==='radio') return;
+    var label='';
+    if(el.id){
+      var lab=tool.querySelector('label[for="'+el.id+'"]');
+      if(lab) label=lab.textContent.trim();
+    }
+    if(!label){
+      var p=el.closest('div');
+      if(p){ var l=p.querySelector('label'); if(l) label=l.textContent.replace(/\s*:?\s*$/,'').trim(); }
+    }
+    var val = el.tagName==='SELECT' ? (el.options[el.selectedIndex]?el.options[el.selectedIndex].text:el.value) : el.value;
+    if(val!==''&&val!==undefined) inputRows.push([label||el.id||'-', val]);
+  });
+  if(inputRows.length) s += esSection('Given Inputs', 'gold', esTable(['Parameter','Value'], inputRows));
+
+  // Canvas diagram
+  var canvases=tool.querySelectorAll('canvas');
+  var images=[];
+  canvases.forEach(function(c,i){
+    var img=esCanvasToImg(c);
+    if(img) images.push({label:'Diagram '+(i+1), dataUrl:img});
+  });
+  if(images.length) s += esSection('Diagram / Visualization', 'purple', esDiagramRow(images.slice(0,2)));
+
+  // Result-ish stat badges / highlighted values
+  var resultRows=[];
+  tool.querySelectorAll('.stat-badge, .viz-stat').forEach(function(b){
+    var val=b.querySelector('.value, .viz-stat-val');
+    var lab=b.querySelector('.label, .viz-stat-label');
+    if(val) resultRows.push([lab?lab.textContent.trim():'-', val.textContent.trim()]);
+  });
+  if(resultRows.length) s += esSection('Working / Statistics', 'teal', esTable(['Metric','Value'], resultRows));
+
+  // Any visible "result" text elements
+  var finalText='';
+  ['ks-max-profit','mst-total-weight','djk-path-result','bfsdfs-order'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el && el.textContent.trim()) finalText += el.textContent.trim()+' ';
+  });
+  s += esFinalAnswer('Result Snapshot', finalText.trim() || 'Run the simulator, then export for a complete snapshot.');
+
+  return s;
+}
+
+var ES_COLLECTORS = {
+  0: function(){ return esCollect_sorting(); },
+  1: function(){ return esCollect_knapsack(); },
+  2: function(){ return esCollect_mst(); },
+  13: function(){ return esCollect_dijkstra(); },
+  9: function(){ return esCollect_bfsdfs(); }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MAIN EXPORT ENTRYPOINT
+// ─────────────────────────────────────────────────────────────────────────────
+async function exportToolPDF(toolIdx, title){
+  var overlay=document.getElementById('pdf-export-overlay');
+  var tool=document.getElementById('tool-'+toolIdx);
+  if(!tool){ showToast('Could not find this tool'); return; }
+  if(overlay) overlay.classList.add('show');
+
+  try{
+    var collector = ES_COLLECTORS[toolIdx];
+    var sectionsHTML = collector ? collector() : esCollect_generic(toolIdx, title);
+
+    var sheet = esBuildSheet('⚡ '+title, 'GTU Exam-Style Solved Answer', sectionsHTML);
+    document.body.appendChild(sheet);
+
+    // allow layout to settle before capture
+    await new Promise(function(r){ setTimeout(r, 60); });
+
+    var canvas = await html2canvas(sheet, {backgroundColor:'#ffffff', scale:2, useCORS:true, logging:false});
+    var imgData = canvas.toDataURL('image/png');
+
+    var { jsPDF } = window.jspdf;
+    var pdf = new jsPDF('p','mm','a4');
+    var pageW = pdf.internal.pageSize.getWidth();
+    var pageH = pdf.internal.pageSize.getHeight();
+    var margin = 6;
+
+    var imgW = pageW - margin*2;
+    var imgH = canvas.height*imgW/canvas.width;
+
+    if(imgH > pageH - margin*2){
+      imgH = pageH - margin*2;
+      imgW = canvas.width*imgH/canvas.height;
+    }
+    var x=(pageW-imgW)/2, y=margin;
+
+    pdf.setFillColor(255,255,255);
+    pdf.rect(0,0,pageW,pageH,'F');
+    pdf.addImage(imgData,'PNG',x,y,imgW,imgH);
+
+    var safeName=title.replace(/[^a-z0-9]+/gi,'_').replace(/^_+|_+$/g,'');
+    pdf.save(safeName+'_GTU_Solution.pdf');
+    showToast(title+' — exam answer PDF exported!','success');
+
+    document.body.removeChild(sheet);
+  }catch(err){
+    console.error(err);
+    showToast('PDF export failed: '+err.message);
+  }finally{
+    if(overlay) overlay.classList.remove('show');
+  }
+}
 
 </script>
 
