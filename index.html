@@ -6,7 +6,7 @@
 <title>⚡ ADA Algorithm Lab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@400;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -252,96 +252,323 @@ main { padding: 24px; max-width: 1400px; margin: 0 auto; }
   text-align: center;
 }
 
-/* ═══════════════ GTU EXAM ANSWER SHEET (light theme PDF) ═══════════════ */
-.examsheet {
-  position: fixed; left: -10000px; top: 0;
-  width: 1000px;
-  background: #ffffff;
-  color: #1e293b;
-  font-family: 'Inter', sans-serif;
-  padding: 28px 32px;
+/* ══════════════════════════════════════════════════════════════════════════
+   HANDWRITTEN NOTEBOOK PAPER STYLE — GTU Practical Journal PDF
+   ══════════════════════════════════════════════════════════════════════════ */
+.hw-sheet {
+  position: fixed; left: -13000px; top: 0;
+  width: 1060px;
+  min-height: 1414px;
+  background-color: #fffef7;
+  background-image:
+    repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      #c2d6fa 31px,
+      #c2d6fa 32px
+    );
+  color: #1a237e;
+  font-family: 'Kalam', cursive;
+  font-size: 14px;
+  line-height: 2;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
-.examsheet * { box-sizing: border-box; }
-.es-header {
-  display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 4px solid #1d4ed8;
-  padding-bottom: 14px; margin-bottom: 18px;
+.hw-margin-line {
+  position: absolute;
+  top: 0; bottom: 0; left: 80px;
+  width: 2px;
+  background: #e53935;
+  opacity: 0.7;
+  z-index: 1;
 }
-.es-header .es-brand {
-  font-family: 'Orbitron', monospace; font-weight: 900; font-size: 22px;
-  color: #1d4ed8; letter-spacing: 1px;
+.hw-page-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 18px 28px 12px 96px;
+  border-bottom: 1.5px solid #90a4ae;
+  font-family: 'Caveat', cursive;
+  font-size: 15px;
+  color: #1a237e;
 }
-.es-header .es-brand span { color: #f59e0b; }
-.es-header .es-meta {
-  text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #475569;
+.hw-college-name { font-size: 15px; font-weight: 700; color: #0d47a1; }
+.hw-header-meta { text-align: right; font-size: 13px; color: #546e7a; line-height: 1.6; }
+.hw-exp-info {
+  padding: 10px 28px 8px 96px;
+  font-family: 'Caveat', cursive;
+  font-size: 15px; font-weight: 700;
+  color: #1a237e;
+  border-bottom: 1px dashed #b0bec5;
+  margin-bottom: 4px;
 }
-.es-titleband {
-  background: linear-gradient(135deg, #1d4ed8, #7c3aed);
-  color: #fff; border-radius: 12px;
-  padding: 12px 18px; margin-bottom: 18px;
-  font-family: 'Orbitron', monospace; font-weight: 800; font-size: 15px;
+.hw-exp-title { font-size: 17px; }
+.hw-content {
+  padding: 8px 32px 24px 96px;
+}
+.hw-section-label {
+  font-family: 'Caveat', cursive;
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a237e;
+  border-bottom: 2px solid #1a237e;
+  margin-top: 20px;
+  margin-bottom: 6px;
+  padding-bottom: 2px;
+  display: block;
   letter-spacing: 0.5px;
 }
-.es-titleband .es-subtitle {
-  font-family: 'Inter', sans-serif; font-weight: 500; font-size: 11px;
-  margin-top: 4px; opacity: 0.9; letter-spacing: 0;
+.hw-label-arrow { color: #e53935; margin-right: 6px; }
+.hw-para {
+  font-family: 'Kalam', cursive;
+  font-size: 13px;
+  color: #1a237e;
+  line-height: 2;
+  margin: 4px 0 8px 0;
 }
-.es-section { margin-bottom: 16px; }
-.es-section-label {
-  display: inline-block;
-  font-family: 'Orbitron', monospace; font-weight: 800; font-size: 11px;
-  text-transform: uppercase; letter-spacing: 1px;
-  color: #fff; background: #1d4ed8;
-  padding: 4px 12px; border-radius: 6px 6px 0 0;
+.hw-algo-list {
+  font-family: 'Kalam', cursive;
+  font-size: 13px;
+  color: #1a237e;
+  line-height: 2;
+  margin: 4px 0 8px 16px;
+  padding-left: 18px;
 }
-.es-box {
-  border: 1.5px solid #cbd5e1; border-radius: 0 8px 8px 8px;
-  padding: 12px 16px; font-size: 12.5px; line-height: 1.7; color: #334155;
-  background: #f8fafc;
+.hw-algo-step { margin: 2px 0; }
+.hw-pseudo-wrap {
+  background: rgba(255,253,231,0.8);
+  border-left: 3px solid #1a237e;
+  border-radius: 0 4px 4px 0;
+  padding: 8px 14px;
+  margin: 6px 0 10px 0;
 }
-.es-box.gold   { border-color:#f59e0b; background:#fffbeb; }
-.es-box.green  { border-color:#10b981; background:#ecfdf5; }
-.es-box.purple { border-color:#8b5cf6; background:#f5f3ff; }
-.es-box.red    { border-color:#ef4444; background:#fef2f2; }
-.es-box.teal   { border-color:#14b8a6; background:#f0fdfa; }
-.es-section-label.gold   { background:#f59e0b; }
-.es-section-label.green  { background:#10b981; }
-.es-section-label.purple { background:#8b5cf6; }
-.es-section-label.red    { background:#ef4444; }
-.es-section-label.teal   { background:#14b8a6; }
+.hw-pseudo-label {
+  font-family: 'Caveat', cursive;
+  font-size: 14px; font-weight: 700;
+  color: #0d47a1;
+  margin-bottom: 4px;
+}
+.hw-pre {
+  font-family: 'Kalam', cursive;
+  font-size: 12px;
+  color: #1a237e;
+  white-space: pre;
+  line-height: 1.8;
+  margin: 0;
+}
+.hw-svg-block {
+  margin: 10px 0;
+  padding: 8px;
+  background: #fffef7;
+  border: 1.5px solid #b0bec5;
+  border-radius: 6px;
+}
+.hw-svg-caption {
+  font-family: 'Kalam', cursive;
+  font-size: 11px; color: #546e7a;
+  text-align: center; margin-top: 4px;
+}
+.hw-canvas-img { margin: 8px 0; text-align: center; }
+.hw-diagram-block { margin: 10px 0; }
+/* COMPLEXITY TABLE */
+.hw-cx-table {
+  border: 1.5px solid #90a4ae;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 6px 0 12px 0;
+  background: #fffef7;
+}
+.hw-cx-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 4px 0;
+}
+.hw-cx-row:last-child { border-bottom: none; }
+.hw-cx-case {
+  font-family: 'Caveat', cursive;
+  font-size: 13px; font-weight: 700;
+  color: #0d47a1;
+  min-width: 180px;
+  padding: 2px 12px;
+  border-right: 1.5px solid #b0bec5;
+}
+.hw-cx-val {
+  font-family: 'Kalam', cursive;
+  font-size: 13px;
+  color: #1a237e;
+  padding: 2px 14px;
+}
+.hw-cx-space { background: #e8f4fd; }
+/* LIST */
+.hw-ul {
+  font-family: 'Kalam', cursive;
+  font-size: 13px;
+  color: #1a237e;
+  list-style: none;
+  margin: 4px 0 8px 8px;
+  padding: 0;
+  line-height: 1.9;
+}
+.hw-bullet { margin-right: 6px; font-size: 10px; }
+/* DRY RUN TABLE */
+.hw-table-wrap { overflow-x: auto; margin: 8px 0 12px 0; }
+.hw-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Kalam', cursive;
+  font-size: 12px;
+  color: #1a237e;
+}
+.hw-table th {
+  font-family: 'Caveat', cursive;
+  font-size: 13px; font-weight: 700;
+  background: #e3f2fd;
+  color: #0d47a1;
+  border: 1.5px solid #90a4ae;
+  padding: 5px 10px;
+  text-align: center;
+}
+.hw-table td {
+  border: 1px solid #b0bec5;
+  padding: 4px 10px;
+  text-align: center;
+}
+.hw-table tr:nth-child(even) td { background: #f5f9ff; }
+/* VIVA */
+.hw-viva { margin: 6px 0 12px 0; }
+.hw-viva-q {
+  font-family: 'Caveat', cursive;
+  font-size: 14px; font-weight: 700;
+  color: #0d47a1;
+  margin-top: 10px; margin-bottom: 2px;
+}
+.hw-q-num { color: #e53935; margin-right: 4px; }
+.hw-viva-a {
+  font-family: 'Kalam', cursive;
+  font-size: 13px;
+  color: #1a237e;
+  line-height: 1.9;
+  margin-left: 20px;
+}
+.hw-a-lbl { color: #2e7d32; font-weight: 700; margin-right: 4px; }
+/* MARK-WISE ANSWERS */
+.hw-marks { margin: 6px 0 12px 0; }
+.hw-mark-section { margin: 8px 0; display: flex; align-items: flex-start; gap: 10px; }
+.hw-mark-badge {
+  font-family: 'Caveat', cursive;
+  font-size: 13px; font-weight: 700;
+  color: #fff;
+  background: #0d47a1;
+  padding: 2px 10px; border-radius: 12px;
+  white-space: nowrap; min-width: 68px; text-align: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.hw-mark-ans {
+  font-family: 'Kalam', cursive;
+  font-size: 12.5px; color: #1a237e;
+  line-height: 1.8; flex: 1;
+}
+/* GTU TIPS */
+.hw-tips { margin: 6px 0 10px 0; }
+.hw-tip {
+  font-family: 'Kalam', cursive;
+  font-size: 13px; color: #37474f;
+  padding: 3px 0; line-height: 1.8;
+}
+/* RESULT */
+.hw-result {
+  background: #e8f5e9;
+  border: 2px solid #2e7d32;
+  border-radius: 6px;
+  padding: 10px 16px;
+  margin: 16px 0 8px 0;
+  text-align: center;
+}
+.hw-result-label {
+  font-family: 'Caveat', cursive;
+  font-size: 14px; font-weight: 700;
+  color: #1b5e20;
+  margin-bottom: 4px;
+}
+.hw-result-val {
+  font-family: 'Kalam', cursive;
+  font-size: 13px; color: #2e7d32;
+  line-height: 1.8;
+}
+/* PAGE FOOTER */
+.hw-page-footer {
+  display: flex; justify-content: space-between;
+  padding: 10px 28px 14px 96px;
+  border-top: 1px dashed #b0bec5;
+  margin-top: 16px;
+  font-family: 'Kalam', cursive;
+  font-size: 11px; color: #78909c;
+}
+/* EXPORT MENU */
+#hw-export-menu { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; }
+.hw-menu-backdrop { position: absolute; inset: 0; background: rgba(10,14,26,0.72); backdrop-filter: blur(4px); }
+.hw-menu-box {
+  position: relative;
+  background: #fffef7;
+  border: 2px solid #1a237e;
+  border-radius: 12px;
+  padding: 28px 32px;
+  max-width: 480px;
+  width: 92%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  font-family: 'Kalam', cursive;
+}
+.hw-menu-title {
+  font-family: 'Caveat', cursive;
+  font-size: 20px; font-weight: 700;
+  color: #0d47a1; text-align: center;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #1a237e;
+  padding-bottom: 10px;
+}
+.hw-menu-btn {
+  display: block; width: 100%;
+  background: #fff;
+  border: 1.5px solid #90a4ae;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  font-family: 'Kalam', cursive;
+  font-size: 15px;
+  color: #1a237e;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s, border-color 0.2s;
+}
+.hw-btn-exam { border-color: #1a237e; background: #e8f4fd; }
+.hw-btn-exam:hover { background: #bbdefb; }
+.hw-btn-viva { border-color: #2e7d32; background: #e8f5e9; }
+.hw-btn-viva:hover { background: #c8e6c9; }
+.hw-btn-viz { border-color: #e65100; background: #fff3e0; }
+.hw-btn-viz:hover { background: #ffe0b2; }
+.hw-btn-desc {
+  font-size: 11px;
+  color: #546e7a;
+  margin-top: 4px;
+  font-family: 'Kalam', cursive;
+}
+.hw-menu-close {
+  display: block; width: 100%;
+  background: none; border: 1.5px solid #90a4ae;
+  border-radius: 8px; padding: 8px;
+  font-family: 'Kalam', cursive; font-size: 13px;
+  color: #78909c; cursor: pointer; text-align: center;
+  margin-top: 4px;
+}
+.hw-menu-close:hover { background: #fafafa; }
+/* ─── Old examsheet compat (needed for legacy selectors) ─── */
+.examsheet { position: fixed; left: -10000px; top: 0; width: 100px; height: 100px; overflow: hidden; visibility: hidden; }
+.btn-grey { background: linear-gradient(135deg, #374151, #4b5563); color: #fff; }
+.btn-orange { background: linear-gradient(135deg, #c2410c, #f97316); color: #fff; }
+.btn-teal { background: linear-gradient(135deg, #0f766e, #14b8a6); color: #fff; }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
 
-.es-table { width:100%; border-collapse: collapse; font-size: 11.5px; }
-.es-table th, .es-table td {
-  border: 1px solid #cbd5e1; padding: 5px 8px; text-align: center;
-}
-.es-table th { background:#1d4ed8; color:#fff; font-family:'JetBrains Mono',monospace; font-weight:700; }
-.es-table tr:nth-child(even) td { background:#f1f5f9; }
-.es-table td.es-hl { background:#fde68a !important; font-weight:700; }
-.es-table td.es-hl2 { background:#bbf7d0 !important; font-weight:700; }
 
-.es-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-.es-imgwrap { text-align:center; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:8px; padding:10px; }
-.es-imgwrap img { max-width:100%; border-radius:6px; }
-
-.es-finalanswer {
-  font-family:'Orbitron',monospace; font-weight:900; font-size: 22px; color:#15803d;
-  text-align:center; padding:14px;
-  background: linear-gradient(135deg,#ecfdf5,#d1fae5);
-  border: 2px solid #10b981; border-radius: 10px;
-}
-.es-finalanswer .es-fa-label { display:block; font-family:'Inter',sans-serif; font-weight:600; font-size:11px; color:#475569; margin-bottom:4px; letter-spacing:1px; text-transform:uppercase; }
-
-.es-cxgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-.es-cxbox { text-align:center; border:1.5px solid #cbd5e1; border-radius:8px; padding:10px; background:#f8fafc; }
-.es-cxbox .es-cx-val { font-family:'JetBrains Mono',monospace; font-weight:800; font-size:16px; color:#1d4ed8; }
-.es-cxbox .es-cx-lbl { font-size:10px; color:#64748b; margin-top:2px; text-transform:uppercase; letter-spacing:.5px; }
-
-.es-footer {
-  margin-top:18px; padding-top:10px; border-top:1.5px dashed #cbd5e1;
-  font-size:10px; color:#94a3b8; text-align:center; font-family:'JetBrains Mono',monospace;
-}
-.es-steplog { font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.9; color:#334155; }
-.es-steplog .step-num { color:#1d4ed8; font-weight:800; margin-right:6px; }
 .btn-grey { background: linear-gradient(135deg, #374151, #4b5563); color: #fff; }
 .btn-orange { background: linear-gradient(135deg, #c2410c, #f97316); color: #fff; }
 .btn-teal { background: linear-gradient(135deg, #0f766e, #14b8a6); color: #fff; }
@@ -10186,400 +10413,999 @@ function npAnswerQuiz(chosen){
   };
 })();
 // ─────────────────────────────────────────────────────────────────────────────
-// GTU EXAM-STYLE PDF EXPORT — structured answer sheet per simulator
-// ─────────────────────────────────────────────────────────────────────────────
 
-// Escape helper
-function esEsc(s){ return String(s===undefined||s===null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+// ══════════════════════════════════════════════════════════════════════════════
+// ADA ALGORITHM LAB — HANDWRITTEN EXAM PDF SYSTEM v4
+// Generates realistic GTU practical journal style PDFs
+// ══════════════════════════════════════════════════════════════════════════════
+var ALGO_META = {
+  0: {
+    title:'Sorting Algorithms',exp:'Experiment No: 01',
+    aim:'To study, implement and compare sorting algorithms: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Heap Sort, Counting Sort, and Bucket Sort.',
+    theory:'Sorting arranges elements in a defined order. Comparison-based sorts have a lower bound of O(n log n). Bubble Sort repeatedly swaps adjacent out-of-order elements. Selection Sort finds the minimum and moves it front. Insertion Sort builds a sorted array one element at a time. Merge Sort divides the array in halves, sorts each, and merges — always O(n log n). Heap Sort builds a max-heap and extracts elements — in-place O(n log n). Counting Sort counts element frequencies and reconstructs — O(n+k) for integer range k.',
+    algorithm:['Start','Accept input array A of n elements','Choose sorting algorithm','For Bubble Sort: pass through array swapping A[j],A[j+1] if A[j]>A[j+1]; repeat n-1 passes','For Merge Sort: recursively split to halves, sort each, then MERGE sorted halves','For Heap Sort: BUILD_MAX_HEAP then repeatedly extract maximum','Print sorted array','Stop'],
+    pseudocode:'BUBBLE_SORT(A,n):\n  for i=0 to n-2:\n    for j=0 to n-2-i:\n      if A[j]>A[j+1]: swap(A[j],A[j+1])\n\nMERGE_SORT(A,lo,hi):\n  if lo<hi:\n    mid=(lo+hi)/2\n    MERGE_SORT(A,lo,mid)\n    MERGE_SORT(A,mid+1,hi)\n    MERGE(A,lo,mid,hi)',
+    complexity:{best:'O(n) — Insertion (sorted input)',avg:'O(n log n) — Merge/Heap',worst:'O(n²) — Bubble/Selection',space:'O(1) in-place | O(n) Merge Sort'},
+    applications:['Database record sorting','Operating system scheduling','Search engine indexing','E-commerce product ranking'],
+    advantages:['Merge Sort: stable, always O(n log n)','Heap Sort: in-place O(n log n)','Insertion Sort efficient for nearly-sorted data','Counting Sort achieves O(n) for bounded integer keys'],
+    disadvantages:['Bubble/Selection O(n²) slow for large n','Merge Sort needs O(n) extra space','Quick Sort degrades to O(n²) on sorted input'],
+    viva:[
+      {q:'Best-case time complexity of Bubble Sort?',a:'O(n) — when array is already sorted. Optimized version detects no swaps in first pass and terminates early.'},
+      {q:'Why Merge Sort over Quick Sort for linked lists?',a:'Merge Sort uses sequential access, not random access. Linked lists have O(n) random access so Merge Sort is ideal.'},
+      {q:'What is a stable sorting algorithm? Give examples.',a:'Stable sort preserves relative order of equal elements. Examples: Merge Sort, Insertion Sort, Bubble Sort, Counting Sort.'},
+      {q:'Lower bound for comparison-based sorting?',a:'Ω(n log n) — decision tree argument: tree with n! leaves has height ≥ log₂(n!).'},
+      {q:'When prefer Counting Sort over Merge Sort?',a:'When key range k is small relative to n. Counting Sort O(n+k) beats O(n log n) when k = O(n).'}
+    ],
+    conclusion:'Comparison-based algorithms achieve optimal O(n log n) in Merge and Heap Sort. Counting Sort O(n) for restricted inputs. Choice depends on stability, memory, and data distribution.',
+    paradigm:'Comparison-based / Non-comparison',category:'Sorting'
+  },
+  1: {
+    title:'0/1 Knapsack (Dynamic Programming)',exp:'Experiment No: 02',
+    aim:'To solve the 0/1 Knapsack Problem using Dynamic Programming and find the maximum profit without exceeding weight capacity W.',
+    theory:'0/1 Knapsack: given n items with weights w[] and values v[], and capacity W, maximize total value. Each item is either included (1) or excluded (0). DP table dp[i][w] = max value using first i items with capacity w. Recurrence: dp[i][w] = max(dp[i-1][w], dp[i-1][w-wᵢ]+vᵢ) if wᵢ≤w, else dp[i-1][w]. Final answer: dp[n][W]. Traceback from dp[n][W] identifies selected items.',
+    algorithm:['Start','Accept n items weights w[], values v[], capacity W','Create dp[n+1][W+1] initialized to 0','For i=1 to n: For cap=0 to W:','  If w[i]≤cap: dp[i][cap]=max(dp[i-1][cap], dp[i-1][cap-w[i]]+v[i])','  Else: dp[i][cap]=dp[i-1][cap]','Traceback from dp[n][W] to find selected items','Print max profit = dp[n][W]','Stop'],
+    pseudocode:'KNAPSACK_01(w[],v[],n,W):\n  dp[0..n][0..W] = 0\n  for i=1 to n:\n    for cap=0 to W:\n      if w[i]<=cap:\n        dp[i][cap]=max(dp[i-1][cap], dp[i-1][cap-w[i]]+v[i])\n      else:\n        dp[i][cap]=dp[i-1][cap]\n  return dp[n][W]',
+    complexity:{best:'O(n·W)',avg:'O(n·W)',worst:'O(n·W)',space:'O(n·W) table | O(W) optimized'},
+    applications:['Resource allocation in projects','Memory management in OS','Financial portfolio optimization','Cargo loading in logistics'],
+    advantages:['Guarantees optimal solution','Avoids exponential brute-force','DP table enables item traceback','Works for any positive integer weights'],
+    disadvantages:['O(n·W) — pseudo-polynomial time','O(n·W) space for full table','Not efficient for very large W'],
+    viva:[
+      {q:'Why is 0/1 Knapsack called pseudo-polynomial?',a:'Complexity O(n·W) depends on numeric value of W, not its bit-length. Exponential in input size when W is large.'},
+      {q:'Difference between 0/1 and Fractional Knapsack?',a:'0/1: item fully included or excluded; Greedy fails, DP required. Fractional: can take portions; Greedy by v/w ratio is optimal.'},
+      {q:'How to traceback selected items from DP table?',a:'From dp[n][W]: if dp[i][w]≠dp[i-1][w], item i included. Move to dp[i-1][w-w[i]]. Continue until i=0.'},
+      {q:'Can DP table space be optimized to O(W)?',a:'Yes — use 1D array updated right-to-left. dp[cap] = max(dp[cap], dp[cap-w[i]]+v[i]). Eliminates row dimension.'},
+      {q:'Is 0/1 Knapsack NP-Hard?',a:'Yes — NP-Complete as a decision problem, NP-Hard as optimization. No truly polynomial algorithm unless P=NP.'}
+    ],
+    conclusion:'0/1 Knapsack DP achieves O(n·W) time. Guarantees optimal solution via bottom-up table. Traceback identifies selected items. Classic example of optimal substructure + overlapping subproblems.',
+    paradigm:'Dynamic Programming',category:'Optimization'
+  },
+  2: {
+    title:"Minimum Spanning Tree (Prim's & Kruskal's)",exp:'Experiment No: 03',
+    aim:"To find the Minimum Spanning Tree of a weighted undirected graph using Prim's and Kruskal's algorithms.",
+    theory:"MST connects all V vertices with V-1 minimum-weight edges, no cycles. Prim's: grow MST from start vertex, always adding minimum weight edge from tree to non-tree vertex (greedy). Kruskal's: sort all edges by weight, add each if it doesn't create a cycle (Union-Find for detection). Both are greedy algorithms proven optimal by the Cut Property: the minimum weight edge crossing any cut of G belongs to every MST.",
+    algorithm:["Start","Accept graph G(V,E) with weights","Prim's: Init MST with start vertex. Repeat V-1 times: add min-weight edge connecting tree to non-tree vertex","Kruskal's: Sort edges by weight. For each edge (u,v,w): if Find(u)≠Find(v), add to MST and Union(u,v)","Print MST edges and total weight","Stop"],
+    pseudocode:"PRIM(G,start):\n  key[]=INF; key[start]=0; inMST[]=false\n  for each vertex:\n    u=min key not in MST; inMST[u]=true\n    for (v,w) in adj[u]:\n      if !inMST[v] and w<key[v]: key[v]=w; parent[v]=u\n\nKRUSKAL(G):\n  sort edges by weight\n  for (u,v,w) in edges:\n    if FIND(u)!=FIND(v): MST.add(u,v,w); UNION(u,v)",
+    complexity:{best:"O(E log V) — Prim's with heap",avg:"O(E log E) — Kruskal's",worst:"O(V²) — Prim's adjacency matrix",space:'O(V+E)'},
+    applications:['Network cable design','Cluster analysis in ML','TSP approximation','Electricity distribution planning'],
+    advantages:['Guarantees minimum-weight spanning tree','Kruskal handles disconnected components','Prim efficient for dense graphs'],
+    disadvantages:['Only undirected connected graphs','Kruskal sorting adds O(E log E)','Prim with adj matrix is O(V²)'],
+    viva:[
+      {q:'What is the Cut Property for MST?',a:'The minimum weight edge crossing any cut (partition of V into two sets) belongs to every MST. Proves Prim\'s and Kruskal\'s correctness.'},
+      {q:'MST vs Shortest Path Tree difference?',a:'MST: minimizes total of V-1 edge weights. SPT (Dijkstra): minimizes path distance from source. They are generally different trees.'},
+      {q:"How does Kruskal's detect cycles?",a:'Using DSU. Before adding edge (u,v), check Find(u)==Find(v). If yes, same component — skip. Else add and Union(u,v).'},
+      {q:'Can a graph have multiple MSTs?',a:'Yes, if multiple edges have equal weight. All valid MSTs have the same minimum total weight.'},
+      {q:"Boruvka's algorithm?",a:"Repeatedly finds minimum edge for each component, merges components. O(E log V). Parallelizes well."}
+    ],
+    conclusion:"Prim's and Kruskal's both produce optimal MSTs in O(E log V). Prim's better for dense graphs; Kruskal's for sparse. Both use greedy strategy proven optimal by Cut Property.",
+    paradigm:'Greedy',category:'Graph Algorithms'
+  },
+  3: {
+    title:'Longest Common Subsequence (LCS)',exp:'Experiment No: 04',
+    aim:'To find the Longest Common Subsequence of two strings using Dynamic Programming.',
+    theory:'LCS is the longest sequence present in both strings (elements need not be contiguous). DP: dp[i][j]=dp[i-1][j-1]+1 if X[i]=Y[j], else max(dp[i-1][j],dp[i][j-1]). dp[m][n]=LCS length. Traceback: start at dp[m][n]; when X[i]=Y[j] include character and move diagonally. LCS is used in diff tools, DNA alignment, version control.',
+    algorithm:['Start','Accept strings X(length m) and Y(length n)','Initialize dp[0..m][0..n]=0','For i=1 to m, j=1 to n: If X[i-1]=Y[j-1]: dp[i][j]=dp[i-1][j-1]+1, Else: dp[i][j]=max(dp[i-1][j],dp[i][j-1])','Traceback from dp[m][n] to reconstruct LCS string','Print LCS string and length','Stop'],
+    pseudocode:'LCS(X,Y,m,n):\n  dp[0..m][0..n]=0\n  for i=1 to m:\n    for j=1 to n:\n      if X[i-1]==Y[j-1]: dp[i][j]=dp[i-1][j-1]+1\n      else: dp[i][j]=max(dp[i-1][j],dp[i][j-1])\n  return dp[m][n]',
+    complexity:{best:'O(m·n)',avg:'O(m·n)',worst:'O(m·n)',space:'O(m·n) DP table'},
+    applications:['File diff/git comparison','DNA sequence alignment','Spell checking','Plagiarism detection'],
+    advantages:['Optimal solution guaranteed','Avoids exponential recursive computation','Traceback gives actual LCS string','Applicable to any alphabet'],
+    disadvantages:['O(m·n) space costly for very long strings','Multiple LCS may exist','Not suitable for real-time comparison'],
+    viva:[
+      {q:'LCS vs LCS Substring?',a:'LCS: non-contiguous elements allowed. LCS Substring: contiguous required. "ABCBDAB" and "BDCAB": LCS="BCAB"(4), Substring="AB"(2).'},
+      {q:'How does space reduce to O(n)?',a:'dp[i][j] depends only on dp[i-1][j-1], dp[i-1][j], dp[i][j-1] — only 2 rows needed. But traceback is lost with this optimization.'},
+      {q:'LCS for 3 strings?',a:'Extend to 3D DP: dp[i][j][k]=LCS(X[1..i],Y[1..j],Z[1..k]). O(m·n·p) time and space.'},
+      {q:'Relation between LCS and Edit Distance?',a:'Edit Distance (insertions/deletions only) = m+n-2×LCS(X,Y). With substitutions allowed, it differs.'},
+      {q:'Why is LCS useful in bioinformatics?',a:'DNA/protein sequences share common subsequences representing conserved regions. LCS length measures similarity for alignment.'}
+    ],
+    conclusion:'LCS DP solves core string problem in O(m·n) time and space. Table enables traceback. Applications: version control, bioinformatics, NLP.',
+    paradigm:'Dynamic Programming',category:'String Algorithms'
+  },
+  4: {
+    title:'Binary Search',exp:'Experiment No: 05',
+    aim:'To search for a target element in a sorted array using Binary Search and determine its index.',
+    theory:'Binary Search works on sorted arrays. Compare target with middle element: if equal found; if target smaller search left half; if larger search right half. Halves search space each step: O(log n). Precondition: array must be sorted. Iterative: O(1) space. Recursive: O(log n) stack space. For n=10⁹ needs only 30 comparisons.',
+    algorithm:['Start','Accept sorted array A[0..n-1] and target T','Set low=0, high=n-1','While low≤high: mid=(low+high)/2','  If A[mid]=T: return mid (found)','  If A[mid]<T: low=mid+1','  Else: high=mid-1','Return -1 (not found)','Stop'],
+    pseudocode:'BINARY_SEARCH(A,n,target):\n  low=0; high=n-1\n  while low<=high:\n    mid=(low+high)/2\n    if A[mid]==target: return mid\n    else if A[mid]<target: low=mid+1\n    else: high=mid-1\n  return -1',
+    complexity:{best:'O(1) — target at middle',avg:'O(log n)',worst:'O(log n)',space:'O(1) iterative | O(log n) recursive'},
+    applications:['Database indexing','Dictionary lookup','Finding insertion point','Game: guess-the-number'],
+    advantages:['Exponentially faster than linear search','Simple to implement','Works on any sorted comparable data'],
+    disadvantages:['Requires sorted array','Not for unsorted or frequently updated data','Requires random access — not for linked lists'],
+    viva:[
+      {q:'What if array is not sorted?',a:'Binary Search gives incorrect results on unsorted data — may incorrectly eliminate halves containing the target.'},
+      {q:'Bug in mid=(low+high)/2?',a:'Integer overflow when low+high > INT_MAX. Fix: mid=low+(high-low)/2. Same result without overflow.'},
+      {q:'Comparisons for n=1000?',a:'At most ⌈log₂(1001)⌉=10 comparisons. For n=10⁹: only 30 comparisons!'},
+      {q:'Binary Search on Answer?',a:'Apply BS to the answer space, not array. E.g., find minimum speed to finish tasks: BS over speed [1..max], check feasibility in O(n).'},
+      {q:'Exponential Search?',a:'Find range [2^k, 2^(k+1)] containing target by doubling k. Then Binary Search in that range. Useful for unbounded/unknown-size arrays.'}
+    ],
+    conclusion:'Binary Search achieves O(log n) on sorted arrays. Divide-and-conquer halving is a reusable pattern. Foundation for many advanced algorithms.',
+    paradigm:'Divide and Conquer',category:'Searching'
+  },
+  5: {
+    title:'Rabin-Karp String Matching',exp:'Experiment No: 06',
+    aim:'To search for pattern P in text T using Rabin-Karp rolling hash algorithm and identify all match positions.',
+    theory:'Rabin-Karp uses hashing for pattern matching. Compute H(P) once. Slide window of size m over text computing H(T[s..s+m-1]). Hash match → verify character by character (avoids spurious hits). Rolling hash: H(s+1)=(d·(H(s)−T[s]·d^(m-1))+T[s+m]) mod q — O(1) per slide. Average O(n+m); worst O(nm) due to collisions.',
+    algorithm:['Start','Accept text T(length n), pattern P(length m), base d, modulus q','Compute pattern hash H(P) and initial window hash H(T[0..m-1])','For s=0 to n-m:','  If H(P)=H(T[s..s+m-1]): verify character-by-character','  If match confirmed: record position s','  Update rolling hash for next window','Print all match positions','Stop'],
+    pseudocode:'RABIN_KARP(T,P,d,q):\n  n=len(T);m=len(P);h=d^(m-1) mod q\n  hp=ht=0\n  for i=0 to m-1: hp=(d*hp+P[i])%q; ht=(d*ht+T[i])%q\n  for s=0 to n-m:\n    if hp==ht and T[s..s+m-1]==P: output s\n    if s<n-m: ht=(d*(ht-T[s]*h)+T[s+m])%q',
+    complexity:{best:'O(n+m)',avg:'O(n+m)',worst:'O(nm) — many collisions',space:'O(1)'},
+    applications:['Plagiarism detection','Multiple pattern search','Intrusion detection','DNA sequence matching'],
+    advantages:['O(n+m) average','Easily extended to multi-pattern','Rolling hash O(1) per slide'],
+    disadvantages:['Worst case O(nm) on many collisions','Requires good hash + prime modulus','More complex than KMP'],
+    viva:[
+      {q:'What is a spurious hit?',a:'Hash of window equals pattern hash but characters differ — false alarm due to collision. Verification step removes it.'},
+      {q:'Why prime modulus?',a:'Prime reduces collisions by distributing hash values more uniformly.'},
+      {q:'Multi-pattern extension?',a:'Store all pattern hashes in hash set. Window hash matches any → verify. O((n+m)k) for k patterns.'},
+      {q:'Compare with KMP?',a:'KMP: O(n+m) worst case, no collisions, single pattern. Rabin-Karp: O(nm) worst, simpler, better for multiple patterns.'},
+      {q:'Rolling hash formula efficiency?',a:'H(s+1)=(d·(H(s)−T[s]·h)+T[s+m]) mod q. Removes leftmost char, adds new char in O(1) vs O(m) recompute.'}
+    ],
+    conclusion:'Rabin-Karp uses rolling hash for O(n+m) average matching. Excellent for multiple pattern search. Verification step handles hash collisions.',
+    paradigm:'Hashing',category:'String Algorithms'
+  },
+  6: {
+    title:'Quick Sort',exp:'Experiment No: 07',
+    aim:'To sort an array using Quick Sort with Lomuto partition scheme and analyze its complexity cases.',
+    theory:'Quick Sort is divide-and-conquer: select pivot (last element), partition into ≤pivot (left) and >pivot (right), recursively sort partitions. Lomuto: index i tracks ≤pivot boundary; swap when A[j]≤pivot. After partition, pivot in final position. Average O(n log n). Worst O(n²) on sorted/reverse-sorted. Median-of-three pivot avoids worst case. Cache-friendly, in-place.',
+    algorithm:['Start','Accept array A[lo..hi]','If lo≥hi: return (base case)','PARTITION: pivot=A[hi], i=lo-1','For j=lo to hi-1: if A[j]≤pivot: i++, swap(A[i],A[j])','swap(A[i+1],A[hi]) — pivot at correct position','Recursively sort A[lo..i] and A[i+2..hi]','Stop'],
+    pseudocode:'QUICK_SORT(A,lo,hi):\n  if lo<hi:\n    p=PARTITION(A,lo,hi)\n    QUICK_SORT(A,lo,p-1)\n    QUICK_SORT(A,p+1,hi)\n\nPARTITION(A,lo,hi):\n  pivot=A[hi]; i=lo-1\n  for j=lo to hi-1:\n    if A[j]<=pivot: i++; swap(A[i],A[j])\n  swap(A[i+1],A[hi])\n  return i+1',
+    complexity:{best:'O(n log n) — balanced partitions',avg:'O(n log n)',worst:'O(n²) — sorted input',space:'O(log n) recursion stack'},
+    applications:['Language standard library sort','Virtual memory management','In-place large dataset sorting'],
+    advantages:['Small constant factor — fast in practice','In-place O(1) extra space','Cache-friendly sequential access','Parallelizable'],
+    disadvantages:['O(n²) worst case on sorted input','Not stable','Recursive — stack overflow risk for large n'],
+    viva:[
+      {q:'Worst case and how to avoid?',a:'O(n²) when pivot always min/max. Fix: random pivot, median-of-three, or Introsort.'},
+      {q:'Why faster than Merge Sort in practice?',a:'Better cache performance (in-place), smaller constants, O(log n) space vs O(n). Cache misses slow Merge Sort.'},
+      {q:'What is Introsort?',a:'Hybrid: Quick Sort until depth>2·log₂n, switch to Heap Sort. Uses Insertion Sort for n<16. Used in C++ std::sort.'},
+      {q:'Is Quick Sort stable?',a:'No. Partition step may reorder equal elements.'},
+      {q:'Dutch National Flag partition?',a:'3-way partition: <pivot, =pivot, >pivot. Handles many duplicates efficiently — reduces to O(n log n).'}
+    ],
+    conclusion:'Quick Sort O(n log n) average with minimal space. Cache efficiency makes it practical first choice. Pivot selection critical for performance.',
+    paradigm:'Divide and Conquer',category:'Sorting'
+  },
+  7: {
+    title:'Fractional Knapsack (Greedy)',exp:'Experiment No: 08',
+    aim:'To solve Fractional Knapsack using Greedy strategy, maximizing value within weight capacity W.',
+    theory:'Fractional Knapsack allows taking item fractions. Greedy: sort by v/w ratio descending, take items greedily. If last item doesn\'t fit: take fraction = remaining_capacity/item_weight. Provably optimal: exchange argument shows taking highest v/w ratio first always maximizes profit. Unlike 0/1 Knapsack where greedy fails.',
+    algorithm:['Start','Accept n items with w[], v[], capacity W','Compute v[i]/w[i] ratio for each item','Sort items by v/w ratio descending','remaining=W, profit=0','For each item: if w≤remaining: take full, else take fraction remaining/w','Update profit and remaining','Print total_profit','Stop'],
+    pseudocode:'FRAC_KNAPSACK(items,W):\n  sort items by (v/w) desc\n  profit=0; rem=W\n  for each item:\n    if w<=rem: profit+=v; rem-=w\n    else: profit+=v*(rem/w); break\n  return profit',
+    complexity:{best:'O(n log n)',avg:'O(n log n)',worst:'O(n log n)',space:'O(1)'},
+    applications:['Cloud resource allocation','Investment optimization','Time-sharing scheduling','Bandwidth allocation'],
+    advantages:['Always optimal (provably)','Simple O(n log n) implementation','No DP table needed'],
+    disadvantages:['Cannot apply to 0/1 Knapsack','Real items may not be divisible','Sorting step required'],
+    viva:[
+      {q:'Why greedy works for fractional but not 0/1?',a:'Fractional: can take any portion so highest v/w always best. 0/1: taking high-ratio item might block multiple lower-ratio items with higher combined value.'},
+      {q:'Prove greedy optimality?',a:'Exchange argument: if optimal takes less of item i (higher ratio) and more of j (lower ratio), swapping increases total value. So taking highest ratio first is always optimal.'},
+      {q:'If already sorted, complexity?',a:'O(n) — just the greedy pass. O(n log n) comes only from sorting.'},
+      {q:'Real-world analogy?',a:'Gold dust (divisible) of different values/kg: take highest value/kg first. vs 0/1: solid gold bars (indivisible).'},
+      {q:'What is the knapsack problem with bounded quantities?',a:'Each item available in limited copies. Reduce to 0/1 Knapsack by creating copies, or use specialized DP.'}
+    ],
+    conclusion:'Fractional Knapsack optimally solved by greedy in O(n log n). v/w ratio determines priority. Greedy provably optimal due to item divisibility.',
+    paradigm:'Greedy',category:'Optimization'
+  },
+  8: {
+    title:'Activity Selection Problem',exp:'Experiment No: 09',
+    aim:'To select the maximum number of non-overlapping activities using Greedy Activity Selection.',
+    theory:'Given n activities with start sᵢ and finish fᵢ times, select maximum compatible (non-overlapping) activities. Greedy: sort by finish time ascending. Always select earliest-finishing compatible activity. Optimal: selecting early-finishing activities leaves maximum time for subsequent ones. Proof: exchange argument shows this greedy choice is always safe.',
+    algorithm:['Start','Accept n activities with start s[] and finish f[]','Sort by finish time ascending','Select first activity; lastFinish=f[0]','For each remaining activity i: if s[i]≥lastFinish: select, lastFinish=f[i]','Print selected activities and count','Stop'],
+    pseudocode:'ACTIVITY_SELECTION(s[],f[],n):\n  sort by f[]\n  selected=[0]; last=0\n  for i=1 to n-1:\n    if s[i]>=f[last]:\n      selected.append(i); last=i\n  return selected',
+    complexity:{best:'O(n log n)',avg:'O(n log n)',worst:'O(n log n)',space:'O(n)'},
+    applications:['CPU job scheduling','Meeting room allocation','TV programming','Exam scheduling'],
+    advantages:['Provably optimal greedy','Simple O(n log n)','No DP table needed'],
+    disadvantages:['Only maximizes count, not profit','Doesn\'t handle weighted activities (needs DP)'],
+    viva:[
+      {q:'Why sort by finish time not start time?',a:'Earliest finish leaves maximum remaining time for future activities.'},
+      {q:'Weighted Activity Selection?',a:'Each activity has profit. Greedy fails — use DP: sort by finish, dp[i]=max profit using first i. dp[i]=max(dp[i-1], profit[i]+dp[j]) where j=last compatible.'},
+      {q:'Prove greedy is optimal?',a:'Exchange argument: replace first activity in OPT with earliest-finishing a₁. It ends no later, so remaining activities still fit. Same or better count. By induction, optimal.'},
+      {q:'What is Interval Graph Coloring?',a:'Minimum resources (rooms) to schedule ALL activities = maximum simultaneous overlapping activities. Greedy coloring solves it.'},
+      {q:'Time if pre-sorted?',a:'O(n) — just one linear pass. O(n log n) only from sorting step.'}
+    ],
+    conclusion:'Activity Selection demonstrates greedy optimality. Sort by finish time, select greedily, maximize non-overlapping count in O(n log n).',
+    paradigm:'Greedy',category:'Scheduling'
+  },
+  9: {
+    title:'BFS and DFS Graph Traversal',exp:'Experiment No: 10',
+    aim:'To traverse a graph using BFS and DFS and list the visiting order of vertices.',
+    theory:'BFS: explores level by level using Queue (FIFO). Guarantees shortest path in unweighted graphs. Visits all vertices at distance k before k+1. DFS: explores as deep as possible using Stack/recursion before backtracking. Produces DFS tree, classifies edges: tree, back, forward, cross edges. Both: O(V+E) time, O(V) space.',
+    algorithm:['Start','Accept graph G(V,E) as adjacency list, start vertex s','BFS: Queue Q; enqueue s; mark visited','While Q not empty: dequeue u; print u; enqueue unvisited neighbors','DFS: Stack S; push s','While S not empty: pop u; if unvisited: mark, print, push neighbors','Print traversal order','Stop'],
+    pseudocode:'BFS(G,s):\n  visited={s}; Q=Queue([s])\n  while Q: u=Q.dequeue(); print u\n    for v in adj[u]:\n      if v not in visited: visited.add(v); Q.enqueue(v)\n\nDFS(G,s):\n  visited={}; S=Stack([s])\n  while S: u=S.pop()\n    if u not in visited:\n      visited.add(u); print u\n      for v in adj[u]: S.push(v)',
+    complexity:{best:'O(V+E)',avg:'O(V+E)',worst:'O(V+E)',space:'O(V) queue/stack'},
+    applications:['BFS: shortest path in unweighted graphs, web crawlers','DFS: cycle detection, topological sort, SCC','Network broadcasting (BFS)'],
+    advantages:['BFS finds shortest path in unweighted graphs','DFS uses less memory for deep sparse graphs','Both linear O(V+E)'],
+    disadvantages:['BFS: large memory for wide graphs','DFS: doesn\'t find shortest path','Recursion limit for very deep DFS'],
+    viva:[
+      {q:'When prefer BFS over DFS?',a:'BFS when shortest path needed, solution close to source, or level-order processing. DFS for topological sort, SCC, cycle detection.'},
+      {q:'Back edge in DFS?',a:'Edge from vertex to its ancestor in DFS tree. Indicates a cycle in directed graph.'},
+      {q:'How BFS guarantees shortest path?',a:'Visits by increasing distance from source. First discovery of v is via shortest path (proof by induction on distance).'},
+      {q:'DFS without recursion?',a:'Use explicit stack. Push source, pop, mark visited, push unvisited neighbors. Order may differ from recursive DFS.'},
+      {q:'Time for adjacency matrix vs list?',a:'List: O(V+E). Matrix: O(V²) — must check all V columns per vertex. List much better for sparse graphs.'}
+    ],
+    conclusion:'BFS and DFS are fundamental traversals with O(V+E) complexity. BFS uses queue for level-by-level exploration; DFS uses stack/recursion for deep exploration. BFS guarantees shortest path in unweighted graphs.',
+    paradigm:'Graph Traversal',category:'Graph Algorithms'
+  },
+  10: {
+    title:'Matrix Chain Multiplication',exp:'Experiment No: 11',
+    aim:'To find optimal parenthesization minimizing scalar multiplications using DP.',
+    theory:'Given n matrices A₁..Aₙ with dims p[0..n], find parenthesization minimizing total scalar multiplications. DP: dp[i][j]=min cost to multiply Aᵢ..Aⱼ. Recurrence: dp[i][j]=min over k of (dp[i][k]+dp[k+1][j]+p[i-1]·p[k]·p[j]). dp[i][i]=0. Split table records optimal k. Number of parenthesizations = Catalan number C(n-1) — exponential, so brute force infeasible.',
+    algorithm:['Start','Accept dimension array p[0..n] for n matrices','Init dp[i][i]=0','For chain length l=2 to n: For i=1 to n-l+1, j=i+l-1:','  dp[i][j]=∞; For k=i to j-1:','    cost=dp[i][k]+dp[k+1][j]+p[i-1]*p[k]*p[j]','    If cost<dp[i][j]: dp[i][j]=cost; split[i][j]=k','Print dp[1][n] and parenthesization from split[]','Stop'],
+    pseudocode:'MCM(p[],n):\n  dp[i][i]=0 for all i\n  for l=2 to n:\n    for i=1 to n-l+1:\n      j=i+l-1; dp[i][j]=INF\n      for k=i to j-1:\n        q=dp[i][k]+dp[k+1][j]+p[i-1]*p[k]*p[j]\n        if q<dp[i][j]: dp[i][j]=q; split[i][j]=k\n  return dp[1][n]',
+    complexity:{best:'O(n³)',avg:'O(n³)',worst:'O(n³)',space:'O(n²) dp and split tables'},
+    applications:['ML matrix operations','Graphics transformation pipelines','Scientific computing','SQL query join optimization'],
+    advantages:['Reduces Catalan-number paths to O(n³)','Optimal substructure enables DP','Split table for parenthesization reconstruction'],
+    disadvantages:['O(n³) costly for very large n','O(n²) space','Requires all dimensions upfront'],
+    viva:[
+      {q:'Number of parenthesizations for n matrices?',a:'Catalan C(n-1) ≈ 4^n/n^(3/2). For n=10: 4862 parenthesizations. Exponential growth makes brute force infeasible.'},
+      {q:'Optimal substructure in MCM?',a:'Optimal solution to MCM(i..j) contains optimal sub-solutions to MCM(i..k) and MCM(k+1..j).'},
+      {q:'Why diagonal order in DP?',a:'dp[i][j] depends on dp[i][k] and dp[k+1][j] for k between i and j. Fill diagonals (by chain length l) ensures smaller subproblems solved first.'},
+      {q:'Reconstruct parenthesization from split table?',a:'PRINT(i,j): if i==j: print Aᵢ. Else: print "("+PRINT(i,split[i][j])+" × "+PRINT(split[i][j]+1,j)+")".'},
+      {q:'Why is diagonal order used?',a:'Subproblems of length l depend on length l-1, l-2,... By filling length 2 first, then 3, etc., all needed values are available.'}
+    ],
+    conclusion:'MCM DP reduces exponential parenthesizations to O(n³). Split table enables reconstruction. Template for chain optimization problems.',
+    paradigm:'Dynamic Programming',category:'Optimization'
+  },
+  11: {
+    title:'Coin Change Problem',exp:'Experiment No: 12',
+    aim:'To find minimum coins to make amount A using DP (compare with Greedy).',
+    theory:'Given denominations and target amount, find minimum coins. DP: dp[0]=0, dp[i]=1+min{dp[i-c] for coin c≤i}. Greedy works for standard coins {1,5,10,25} but fails for {1,3,4}: for amount=6, greedy gives 4+1+1=3 coins but DP gives 3+3=2 coins. DP guarantees optimal for any denominations.',
+    algorithm:['Accept coins[] and amount A','Init dp[0]=0, dp[1..A]=∞, from[]=-1','For i=1 to A: For each coin c: If c≤i and dp[i-c]+1<dp[i]: dp[i]=dp[i-c]+1; from[i]=c','Traceback using from[] to find coins used','Print dp[A] and coins used','Stop'],
+    pseudocode:'COIN_CHANGE(coins,amount):\n  dp=[INF]*(amount+1); dp[0]=0\n  from=[-1]*(amount+1)\n  for i=1 to amount:\n    for c in coins:\n      if c<=i and dp[i-c]+1<dp[i]:\n        dp[i]=dp[i-c]+1; from[i]=c\n  // Traceback: pos=amount\n  while pos>0: result.add(from[pos]); pos-=from[pos]',
+    complexity:{best:'O(n·m) n=amount,m=#coins',avg:'O(n·m)',worst:'O(n·m)',space:'O(n)'},
+    applications:['ATM cash dispensing','Point-of-sale change','Budget allocation','Stamp collection'],
+    advantages:['Optimal for any denomination set','Handles cases where greedy fails','Traceback gives exact coins'],
+    disadvantages:['O(n·m) slow for very large amounts','Greedy faster but not always correct'],
+    viva:[
+      {q:'When does Greedy work for Coin Change?',a:'Canonical systems like {1,5,10,25} (US), {1,2,5,10,20,50} (Euro). Fails for arbitrary sets like {1,3,4}.'},
+      {q:'Is Coin Change NP-Hard?',a:'Decision version is NP-Complete. Optimization: weakly NP-Hard. DP is O(n·m) — pseudo-polynomial.'},
+      {q:'What if no solution exists?',a:'dp[amount] remains ∞. Example: coins={2,4}, amount=3 — impossible to make odd amount.'},
+      {q:'Count of ways to make amount?',a:'dp[i] = number of ways. Recurrence: dp[i]+=dp[i-c] for each coin c. dp[0]=1.'},
+      {q:'Space optimization?',a:'Cannot below O(n) — need full dp array. Can remove from[] array if only counting coins, not listing them.'}
+    ],
+    conclusion:'Coin Change DP guarantees optimal in O(n·m). Greedy insufficient for general denominations. Bottom-up DP builds solutions from smaller amounts.',
+    paradigm:'Dynamic Programming',category:'Optimization'
+  },
+  12: {
+    title:'Job Sequencing with Deadlines',exp:'Experiment No: 13',
+    aim:'To schedule jobs with profits and deadlines to maximize total profit using Greedy algorithm.',
+    theory:'n jobs with deadlines d[] and profits p[]. Single processor, each job takes 1 unit time. Greedy: sort by profit descending. For each job, assign to latest available slot ≤ deadline. If no slot: reject. Provably optimal for unit-time job maximization.',
+    algorithm:['Sort jobs by profit descending','Find maxD=max deadline','Init slots[0..maxD-1]=null','For each job j in sorted order:','  Find latest free slot t where t≤d[j]-1','  If found: assign, profit+=p[j]','  Else: reject','Print schedule and total profit','Stop'],
+    pseudocode:'JOB_SEQ(jobs,maxD):\n  sort by profit desc\n  slots[0..maxD-1]=null; profit=0\n  for each job j:\n    for t=min(d[j],maxD)-1 downto 0:\n      if slots[t]==null:\n        slots[t]=j; profit+=p[j]; break\n  return slots,profit',
+    complexity:{best:'O(n log n)',avg:'O(n²)',worst:'O(n²)',space:'O(n)'},
+    applications:['CPU process scheduling','Manufacturing scheduling','Cloud task scheduling'],
+    advantages:['Simple greedy','Maximizes profit with unit-time constraint'],
+    disadvantages:['O(n²) slot-finding','Only unit-time jobs','Not for variable-duration jobs'],
+    viva:[
+      {q:'Union-Find optimization?',a:'DSU finds latest free slot in near O(1) amortized. Total: O(n log n).'},
+      {q:'Why assign to latest slot?',a:'Preserves early slots for tight-deadline jobs. Early-slot assignment could block future jobs.'},
+      {q:'Difference from Activity Selection?',a:'Activity: maximize COUNT (no profits, variable duration). Job Seq: maximize PROFIT (unit time, deadlines). Both greedy, different criteria.'},
+      {q:'Same deadline jobs?',a:'Higher profit job attempted first (descending sort). Gets later slot if available.'},
+      {q:'DP for variable-duration weighted jobs?',a:'Sort by finish time; dp[i]=max profit using first i jobs. dp[i]=max(dp[i-1], profit[i]+dp[j]) where j is last non-overlapping job.'}
+    ],
+    conclusion:'Job Sequencing greedy maximizes profit by processing high-profit jobs first, assigning to latest available slots. O(n²) time, O(n log n) with DSU.',
+    paradigm:'Greedy',category:'Scheduling'
+  },
+  13: {
+    title:"Dijkstra's Shortest Path",exp:'Experiment No: 14',
+    aim:"To find shortest paths from a source vertex to all vertices using Dijkstra's Algorithm.",
+    theory:"Dijkstra's solves Single Source Shortest Path for non-negative edge weights. Maintains dist[] and visited[]. Initially dist[source]=0, others=∞. Greedily selects unvisited vertex u with minimum dist[u], marks visited, relaxes neighbors: if dist[u]+w(u,v)<dist[v], update. Greedy selection correct only for non-negative weights — use Bellman-Ford for negative edges.",
+    algorithm:['Accept graph G(V,E), non-negative weights, source s','Init dist[s]=0, dist[others]=∞','Repeat V times: u=unvisited vertex with min dist[u]; mark visited','For each neighbor v: if dist[u]+w(u,v)<dist[v]: dist[v]=dist[u]+w(u,v); prev[v]=u','Print dist[] — shortest distances from s','Stop'],
+    pseudocode:"DIJKSTRA(G,s):\n  dist={v:INF}; dist[s]=0; visited={}\n  while unvisited exist:\n    u=min dist unvisited vertex\n    visited.add(u)\n    for (v,w) in adj[u]:\n      if dist[u]+w<dist[v]:\n        dist[v]=dist[u]+w; prev[v]=u\n  return dist,prev",
+    complexity:{best:'O((V+E)log V) — min-heap',avg:'O((V+E)log V)',worst:'O(V²) — array impl',space:'O(V+E)'},
+    applications:['GPS navigation','Network routing (OSPF)','Social network shortest connection','Flight route optimization'],
+    advantages:['Optimal for non-negative weights','O(E log V) with priority queue','Finds paths to ALL vertices'],
+    disadvantages:['Fails for negative edges (use Bellman-Ford)','Single source only','O(V²) without priority queue'],
+    viva:[
+      {q:"Why doesn't Dijkstra work with negative edges?",a:"Greedy assumption: once vertex finalized, distance is optimal. With negative edges, later path via negative edge could be shorter — violates this assumption."},
+      {q:'Dijkstra vs Bellman-Ford?',a:'Dijkstra: O(E log V), greedy, fails negative weights. Bellman-Ford: O(VE), handles negative weights, detects negative cycles.'},
+      {q:'Fibonacci heap complexity?',a:'O(E+V log V) with Fibonacci heap (decrease-key O(1) amortized).'},
+      {q:'Bidirectional Dijkstra?',a:'Run simultaneously from source and target. Stop when searches meet. ~2x speedup. Used in route planning.'},
+      {q:'Path reconstruction?',a:'Use prev[] array. Start from target t, follow prev[t]→... until source s. Reverse the path.'}
+    ],
+    conclusion:"Dijkstra's O((V+E)log V) with min-heap. Provably optimal for non-negative weights. Foundation of GPS and routing systems.",
+    paradigm:'Greedy',category:'Graph Algorithms'
+  },
+  14: {
+    title:'Floyd-Warshall All-Pairs Shortest Path',exp:'Experiment No: 15',
+    aim:'To find shortest paths between all pairs of vertices using Floyd-Warshall Algorithm.',
+    theory:'APSP DP: D^k[i][j]=min(D^(k-1)[i][j], D^(k-1)[i][k]+D^(k-1)[k][j]). D^0=adjacency matrix. After n iterations, D^n[i][j]=shortest path. Handles negative edges (not negative cycles). O(V³) time, O(V²) space.',
+    algorithm:['Accept weighted adjacency matrix D(n×n)','Init D[i][i]=0, D[i][j]=w(i,j) if edge, else ∞','For k=0 to n-1 (intermediate): For i=0 to n-1: For j=0 to n-1:','  If D[i][k]+D[k][j]<D[i][j]: D[i][j]=D[i][k]+D[k][j]','Print final D matrix','Stop'],
+    pseudocode:'FLOYD_WARSHALL(D,n):\n  for k=0 to n-1:\n    for i=0 to n-1:\n      for j=0 to n-1:\n        if D[i][k]+D[k][j]<D[i][j]:\n          D[i][j]=D[i][k]+D[k][j]\n  // Negative cycle: D[i][i]<0',
+    complexity:{best:'O(V³)',avg:'O(V³)',worst:'O(V³)',space:'O(V²)'},
+    applications:['Network routing tables','Social network analysis','Transitive closure','Bottleneck path problems'],
+    advantages:['All-pairs in one pass','Simple 3-loop implementation','Handles negative edges','Also computes transitive closure'],
+    disadvantages:['O(V³) impractical for very large graphs','O(V²) space','Cannot handle negative cycles'],
+    viva:[
+      {q:'How to detect negative cycles?',a:'After running, check D[i][i]. If any D[i][i]<0: negative cycle through vertex i.'},
+      {q:'Floyd-Warshall vs V×Dijkstra?',a:'Floyd: O(V³) simple. V×Dijkstra: O(V·E log V) better for sparse graphs. Dijkstra fails for negative edges.'},
+      {q:'Transitive closure with Floyd-Warshall?',a:'Replace weights with booleans: reach[i][j]=reach[i][j] OR (reach[i][k] AND reach[k][j]).'},
+      {q:'In-place update safe?',a:'Yes. D[k][k]=0 always ensures D[i][k] and D[k][j] unchanged in iteration k.'},
+      {q:'Optimal substructure?',a:'Shortest path via intermediates {1..k} either uses k (split at k) or doesn\'t. DP recurrence captures both cases.'}
+    ],
+    conclusion:'Floyd-Warshall: O(V³) all-pairs DP. Handles negative edges. For sparse graphs, repeated Dijkstra is more efficient.',
+    paradigm:'Dynamic Programming',category:'Graph Algorithms'
+  },
+  18: {
+    title:'N-Queens Problem (Backtracking)',exp:'Experiment No: 16',
+    aim:'To place N queens on N×N chessboard with no two queens attacking each other using Backtracking.',
+    theory:'Place N queens with no shared row, column, or diagonal. Backtracking: for each row, try each column; if safe, place queen and recurse to next row; if all columns fail, backtrack. isSafe: col[r]≠col[r2] for r2<r; |col[r]-col[r2]|≠|r-r2|. N=8 has 92 solutions. Total states ≤ N! but pruning dramatically reduces actual work.',
+    algorithm:['Init board[0..N-1]=-1','Call solve(row=0)','solve(row): if row=N: solution found','For col=0 to N-1: if isSafe(board,row,col):','  board[row]=col; solve(row+1); board[row]=-1 (backtrack)','isSafe: check column + both diagonals against all placed queens','Print all solutions','Stop'],
+    pseudocode:'NQUEENS(board,row,N):\n  if row==N: print(board); return\n  for col=0 to N-1:\n    if IS_SAFE(board,row,col,N):\n      board[row]=col\n      NQUEENS(board,row+1,N)\n      board[row]=-1  // backtrack\n\nIS_SAFE(board,row,col):\n  for r=0 to row-1:\n    if board[r]==col or |board[r]-col|==|r-row|: return false\n  return true',
+    complexity:{best:'O(N!)',avg:'O(N!)',worst:'O(N!)',space:'O(N) board + stack'},
+    applications:['Constraint satisfaction in AI','Parallel scheduling','Circuit board testing'],
+    advantages:['Finds ALL solutions','Pruning faster than brute O(N^N)','Simple recursive implementation'],
+    disadvantages:['Exponential O(N!)','Slow for large N>20'],
+    viva:[
+      {q:'Solutions for N=8?',a:'92 solutions. N=1:1, N=2,3:0, N=4:2, N=5:10, N=6:4, N=7:40, N=8:92.'},
+      {q:'Backtracking vs brute force?',a:'Brute: N^N placements. Backtracking: ≤N! states with pruning. Actual much fewer due to early constraint violation.'},
+      {q:'Constraint propagation?',a:'After placing queen, mark all attacked cells invalid for remaining rows. Reduces branching factor.'},
+      {q:'3 conditions in isSafe?',a:'(1) column: board[r]==col (2) left diagonal: board[r]-col==r-row (3) right diagonal: board[r]-col==-(r-row). Combined: |board[r]-col|==|r-row|.'},
+      {q:'Can N-Queens be solved in poly time?',a:'No polynomial algorithm known. Decision variant is trivially yes for N≥4.'}
+    ],
+    conclusion:'N-Queens demonstrates backtracking for constraint satisfaction. Systematic exploration with pruning makes it tractable for moderate N.',
+    paradigm:'Backtracking',category:'Backtracking'
+  },
+  24: {
+    title:'Asymptotic Complexity (Big-O)',exp:'Experiment No: 17',
+    aim:'To understand Big-O, Big-Omega, Big-Theta notations and compare growth rates of common complexity functions.',
+    theory:'Big-O: upper bound — f(n)=O(g(n)) means f(n)≤c·g(n) for all n>n₀. Omega: lower bound. Theta: tight bound. Hierarchy: O(1)<O(log n)<O(n)<O(n log n)<O(n²)<O(n³)<O(2ⁿ)<O(n!). Drop constants and lower terms. Master Theorem: T(n)=aT(n/b)+f(n). Three cases based on comparing f(n) with n^log_b(a).',
+    algorithm:['Identify basic operation in algorithm','Count T(n) as function of n','Find dominant term','Express as O(dominant term)','Compare: nested loops→multiply, sequential→add, recursion→Master Theorem'],
+    pseudocode:'COMPLEXITY ANALYSIS RULES:\n1. Sequential: O(n)+O(n²)=O(n²)\n2. Nested loops: O(n)×O(n)=O(n²)\n3. Recursion T(n)=aT(n/b)+f(n): Master Theorem\n4. Drop constants+lower terms:\n   O(3n²+5n+10)=O(n²)',
+    complexity:{best:'O(1) — constant',avg:'O(log n) — binary search',worst:'O(n!) — TSP brute force',space:'N/A — analysis tool'},
+    applications:['Algorithm selection','Performance prediction','Competitive programming','System capacity planning'],
+    advantages:['Machine-independent measure','Identifies bottlenecks before coding','Enables comparison of different algorithms'],
+    disadvantages:['Ignores constants','Only describes growth rate','Small n: O(n²) may be faster than O(n log n) in practice'],
+    viva:[
+      {q:'Difference: O, Ω, Θ?',a:'O: upper bound (worst). Ω: lower bound (best). Θ: tight bound (both). Linear Search: O(n), Ω(1), Θ(n) average.'},
+      {q:'Why drop constants in Big-O?',a:'For large n, dominant term dwarfs others. Constants depend on machine. We measure growth rate, not exact count.'},
+      {q:'Master Theorem cases?',a:'f(n) vs n^log_b(a). Case 1: f(n)=O(n^(c-ε))→T(n)=Θ(n^c). Case 2: equal→Θ(n^c·log n). Case 3: f(n)=Ω(n^(c+ε))→Θ(f(n)).'},
+      {q:'O(n log n) vs O(n+k)?',a:'O(n+k) Counting Sort better when k=O(n). For k>>n, degrades. O(n log n) universal.'},
+      {q:'Can O(n³) be faster than O(n) in practice?',a:'Yes for very small n if O(n³) has tiny constants and O(n) has large overhead. But O(n) always wins asymptotically.'}
+    ],
+    conclusion:'Complexity analysis provides machine-independent algorithm comparison. Big-O hierarchy guides selection. Master theorem solves divide-and-conquer recurrences.',
+    paradigm:'Analysis Framework',category:'Theory'
+  },
+  25: {
+    title:'Heap Data Structure & Heap Sort',exp:'Experiment No: 18',
+    aim:'To build a Max-Heap and perform Heap Sort, analyzing complexity at each step.',
+    theory:'Max-Heap: complete binary tree where every parent ≥ children. Array representation: parent(i)=⌊(i-1)/2⌋, left=2i+1, right=2i+2. Build: heapify all non-leaf nodes from ⌊n/2⌋-1 down to 0 — O(n) total. Heap Sort: swap root (max) with last, reduce size, heapify root. Repeat n-1 times. O(n log n) always.',
+    algorithm:['Accept A[0..n-1]','BUILD_MAX_HEAP: for i=n/2-1 downto 0: HEAPIFY(A,n,i)','Heap Sort: for i=n-1 downto 1: swap(A[0],A[i]); HEAPIFY(A,i,0)','HEAPIFY(A,n,i): find largest among A[i],A[2i+1],A[2i+2]','If largest≠i: swap; recurse on largest','Print sorted A','Stop'],
+    pseudocode:'BUILD_MAX_HEAP(A,n):\n  for i=n/2-1 downto 0: HEAPIFY(A,n,i)\n\nHEAPSORT(A,n):\n  BUILD_MAX_HEAP(A,n)\n  for i=n-1 downto 1:\n    swap(A[0],A[i]); HEAPIFY(A,i,0)\n\nHEAPIFY(A,n,i):\n  largest=i; l=2i+1; r=2i+2\n  if l<n and A[l]>A[largest]: largest=l\n  if r<n and A[r]>A[largest]: largest=r\n  if largest!=i: swap(A[i],A[largest]); HEAPIFY(A,n,largest)',
+    complexity:{best:'O(n log n)',avg:'O(n log n)',worst:'O(n log n)',space:'O(1) in-place'},
+    applications:['Priority queues','Dijkstra/Prim with heap','K-th largest element','Event simulation'],
+    advantages:['Guaranteed O(n log n)','O(1) extra space','O(log n) priority queue ops','Build in O(n)'],
+    disadvantages:['Not stable','Poor cache performance','Slower than Quick Sort in practice'],
+    viva:[
+      {q:'Why Build-Heap O(n) not O(n log n)?',a:'Lower nodes have O(1) heapify cost; only top nodes O(log n). Sum: n/4×1+n/8×2+...=O(n) by geometric series.'},
+      {q:'Why not stable?',a:'Root-to-last swap moves elements long-range, destroying relative order of equals.'},
+      {q:'Heap vs BST for priority queue?',a:'Heap: insert O(log n), extract-max O(log n), build O(n). BST: same but O(n log n) build. Heap preferred — simpler, array-based, better cache.'},
+      {q:'d-ary heap?',a:'d children per node. Decrease-key O(log_d n). Extract-min O(d·log_d n). d=4 often used for cache efficiency.'},
+      {q:'What is heap property?',a:'Max-Heap: parent≥children. Maintained by Heapify: swap with larger child when violated, recurse down.'}
+    ],
+    conclusion:'Heap Sort: guaranteed O(n log n), O(1) space. Heap enables efficient priority queue operations. Build-Heap O(n) insight used in Prim\'s and Dijkstra\'s.',
+    paradigm:'Comparison Sorting',category:'Sorting'
+  },
+  26: {
+    title:'Recurrence Relations & Master Theorem',exp:'Experiment No: 19',
+    aim:'To analyze recurrence relations of divide-and-conquer algorithms using Recurrence Tree and Master Theorem.',
+    theory:'T(n)=aT(n/b)+f(n): a=subproblems, b=size factor, f(n)=combination cost. Master Theorem (c=log_b a): Case 1: f(n)=O(n^(c-ε))→T(n)=Θ(n^c). Case 2: f(n)=Θ(n^c)→T(n)=Θ(n^c·log n). Case 3: f(n)=Ω(n^(c+ε))→T(n)=Θ(f(n)). Recurrence Tree: expand level by level; Level k has a^k nodes each costing f(n/b^k); total levels=log_b n.',
+    algorithm:['Identify T(n)=aT(n/b)+f(n)','Compute c=log_b(a)','Compare f(n) with n^c','Apply Master Theorem case','Or use Recurrence Tree:','  Level 0: f(n). Level 1: a×f(n/b). Level k: a^k×f(n/b^k)','Sum all levels'],
+    pseudocode:'Master Theorem Examples:\n\nMerge Sort: T(n)=2T(n/2)+n\n  a=2,b=2,c=log₂2=1\n  f(n)=n=n^1 → Case 2\n  T(n)=Θ(n log n)\n\nBinary Search: T(n)=T(n/2)+1\n  a=1,b=2,c=0\n  f(n)=1=n^0 → Case 2\n  T(n)=Θ(log n)',
+    complexity:{best:'Θ(n^c) Case 1',avg:'Θ(n^c log n) Case 2',worst:'Θ(f(n)) Case 3',space:'O(log n) tree depth'},
+    applications:['Merge/Quick Sort analysis','Matrix mult complexity','FFT complexity','Scientific algorithm analysis'],
+    advantages:['Exact asymptotic bounds','O(1) analysis for standard forms','Tree gives intuition'],
+    disadvantages:["Doesn't handle T(n)=2T(n/2)+n log n",'Assumes uniform subproblems'],
+    viva:[
+      {q:'Solve T(n)=4T(n/2)+n?',a:'a=4,b=2,c=log₂4=2. f(n)=n=O(n^(2-1)). Case 1. T(n)=Θ(n²).'},
+      {q:"Why can't Master Theorem solve T(n)=2T(n/2)+n log n?",a:'f(n)=n log n vs n^1. f/n^c=log n — not polynomial (not n^ε for any ε>0). No case applies.'},
+      {q:'Substitution method?',a:'Guess solution form, prove by induction. Example: T(n)=2T(n/2)+n, guess Θ(n log n), verify substituting T(n/2)≤c(n/2)log(n/2).'},
+      {q:'Levels in T(n)=2T(n/2)+n tree?',a:'log₂n levels. Total cost = n per level × log n levels = n log n.'},
+      {q:"Strassen's recurrence?",a:"T(n)=7T(n/2)+n². c=log₂7≈2.807. f(n)=n²=O(n^(2.807-0.807)). Case 1. T(n)=Θ(n^2.807)."}
+    ],
+    conclusion:'Master Theorem provides systematic O(1) analysis for standard divide-and-conquer recurrences. Three cases cover most practical algorithms.',
+    paradigm:'Algorithm Analysis',category:'Theory'
+  },
+  27: {
+    title:'Shortest Common Supersequence (SCS)',exp:'Experiment No: 20',
+    aim:'To find the Shortest Common Supersequence of two strings using DP via LCS.',
+    theory:'SCS(X,Y): shortest string containing both X and Y as subsequences. Key: |SCS|=|X|+|Y|-|LCS(X,Y)|. Compute LCS DP table. Construct SCS: when characters match (LCS), include once; otherwise include non-LCS characters from both.',
+    algorithm:['Accept X (length m) and Y (length n)','Compute LCS dp table (m+1)×(n+1)','|SCS|=m+n-LCS_length','Traceback: X[i]=Y[j]→add once, move diag; dp[i-1][j]>dp[i][j-1]→add X[i] up; else add Y[j] left','Return SCS string','Stop'],
+    pseudocode:'SCS(X,Y,m,n):\n  dp=LCS_table(X,Y)\n  i=m; j=n; result=[]\n  while i>0 and j>0:\n    if X[i-1]==Y[j-1]: result.add(X[i-1]); i--; j--\n    elif dp[i-1][j]>dp[i][j-1]: result.add(X[i-1]); i--\n    else: result.add(Y[j-1]); j--\n  add remaining X[i:] and Y[j:]\n  return reverse(result)',
+    complexity:{best:'O(m·n)',avg:'O(m·n)',worst:'O(m·n)',space:'O(m·n) LCS table'},
+    applications:['DNA merging','Version control merge (git)','File merging','Text alignment'],
+    advantages:['Reuses LCS DP code','Minimum-length merge','Linear SCS construction after table'],
+    disadvantages:['O(m·n) for LCS first','Multiple SCS may exist'],
+    viva:[
+      {q:'Prove |SCS|=|X|+|Y|-|LCS|?',a:'LCS chars appear once in SCS. Non-LCS from X and Y appear separately. |SCS|=(|X|-|LCS|)+(|Y|-|LCS|)+|LCS|=|X|+|Y|-|LCS|.'},
+      {q:'Is SCS unique?',a:'Not necessarily. Multiple LCS→multiple equally-short SCS strings.'},
+      {q:'SCS vs concatenation XY?',a:'XY length |X|+|Y|: valid supersequence but not minimum. SCS shares LCS characters, minimum length.'},
+      {q:'SCS for 3 strings?',a:'3D LCS: dp[i][j][k]. O(m·n·p). |SCS|=m+n+p-|LCS₃|.'},
+      {q:'Relationship with LCS?',a:'Dual problems: longer LCS→shorter SCS. Same DP table, different use.'}
+    ],
+    conclusion:'SCS=|X|+|Y|-|LCS|. DP table enables both LCS computation and SCS construction. Important in bioinformatics and merge operations.',
+    paradigm:'Dynamic Programming',category:'String Algorithms'
+  },
+  28: {
+    title:'Union-Find (Disjoint Set Union)',exp:'Experiment No: 21',
+    aim:'To implement DSU with Path Compression and Union by Rank, achieving near-O(1) amortized complexity.',
+    theory:'DSU maintains disjoint sets. Find(x): returns root with path compression (flatten path to root). Union(x,y): merges by rank. Path compression: point all nodes on Find path directly to root. Union by rank: attach shorter tree under taller. Together: O(α(n)) amortized where α=inverse Ackermann function (≤4 practically).',
+    algorithm:['Init parent[i]=i, rank[i]=0 for all i','FIND(x): if parent[x]≠x: parent[x]=FIND(parent[x]); return parent[x]','UNION(x,y): rx=FIND(x), ry=FIND(y); if rx=ry: return','If rank[rx]<rank[ry]: parent[rx]=ry; Elif rank[rx]>rank[ry]: parent[ry]=rx','Else: parent[ry]=rx; rank[rx]++'],
+    pseudocode:'FIND(x):\n  if parent[x]!=x:\n    parent[x]=FIND(parent[x])  // path compression\n  return parent[x]\n\nUNION(x,y):\n  rx=FIND(x); ry=FIND(y)\n  if rx==ry: return\n  if rank[rx]<rank[ry]: swap(rx,ry)\n  parent[ry]=rx\n  if rank[rx]==rank[ry]: rank[rx]++',
+    complexity:{best:'O(α(n)) per op',avg:'O(α(n)) inverse Ackermann',worst:'O(log n) without compression',space:'O(n)'},
+    applications:["Kruskal's cycle detection",'Image segmentation','Social network components','Network connectivity'],
+    advantages:['Near O(1) amortized','Simple array implementation','Foundation for Kruskal\'s'],
+    disadvantages:['Cannot split sets','Path compression changes tree structure'],
+    viva:[
+      {q:'What is α(n)?',a:'Inverse Ackermann. For all practical n, α(n)≤4. DSU operations effectively O(1).'},
+      {q:'Rank vs Size?',a:'Rank: tree height-based. Size: element count-based. Both give O(log n) height. Size easier to reason about.'},
+      {q:'Path compression correct?',a:'Yes. Doesn\'t change set membership (root unchanged). Only restructures tree for future efficiency.'},
+      {q:'Cycle detection in graph?',a:'For edge (u,v): if FIND(u)==FIND(v), cycle. Else UNION(u,v). Exactly Kruskal\'s cycle detection.'},
+      {q:'Without path compression?',a:'Union by rank alone: O(log n) per operation. Tree height ≤ log n. Without either: O(n) worst case.'}
+    ],
+    conclusion:'DSU with path compression + rank: O(α(n)) amortized. Effectively O(1). Foundation for connectivity problems and Kruskal\'s MST.',
+    paradigm:'Data Structures',category:'Graph Algorithms'
+  },
+  29: {
+    title:'Topological Sort & SCC (Kosaraju)',exp:'Experiment No: 22',
+    aim:"To find topological ordering of DAG (Kahn's algorithm) and Strongly Connected Components (Kosaraju's).",
+    theory:"Topological Sort: linear ordering of DAG vertices where for every edge u→v, u comes before v. Kahn's BFS: process in-degree=0 vertices first; reduce neighbors' in-degree. Cycle if not all processed. Kosaraju's SCC: Phase 1 DFS on G for finish order. Phase 2 transpose G. Phase 3 DFS on G^T in reverse finish order — each tree is one SCC.",
+    algorithm:["Kahn's: Compute in-degrees; init queue with 0-indegree vertices","While queue: dequeue u, add to order, reduce neighbors' in-degree","If in-degree=0: enqueue. If |order|<V: cycle exists","Kosaraju's: Phase 1 DFS→finish stack. Phase 2 transpose. Phase 3 DFS on G^T","Each complete DFS = one SCC. Print SCCs"],
+    pseudocode:"KAHN_TOPO(G):\n  inDeg[v]=count incoming edges\n  Q={v|inDeg[v]==0}; order=[]\n  while Q: u=Q.dequeue(); order.add(u)\n    for v in adj[u]: inDeg[v]--; if 0: Q.add(v)\n  return order if |order|==V else 'Cycle!'\n\nKOSARAJU(G):\n  DFS on G → finish stack\n  G_T=transpose(G)\n  while stack: DFS on G_T from top → each tree=SCC",
+    complexity:{best:'O(V+E)',avg:'O(V+E)',worst:'O(V+E)',space:'O(V+E)'},
+    applications:['Build system dependencies (Make)','Course prerequisites','Package management','Deadlock detection'],
+    advantages:['Linear O(V+E)','Kahn detects cycles','Kosaraju finds ALL SCCs in 2 DFS'],
+    disadvantages:['Topo sort only for DAGs','Multiple valid orderings exist'],
+    viva:[
+      {q:'What is an SCC?',a:'Maximal set of vertices S where for every pair (u,v) in S, path exists u→v AND v→u. Every vertex in exactly one SCC.'},
+      {q:"How does Kosaraju's work?",a:'Phase 1: DFS on G, push vertices by finish time. Phase 2: Reverse edges (G^T). Phase 3: DFS on G^T in reverse finish order. Each DFS tree = one SCC.'},
+      {q:'Can DAG have SCCs with >1 vertex?',a:'No. In DAG no cycles so no back paths. Each vertex is its own SCC.'},
+      {q:"Kahn's vs DFS topo sort?",a:"Kahn's BFS: detects cycle if |output|<V. DFS: add to stack on return, reverse. Both O(V+E)."},
+      {q:"Tarjan's vs Kosaraju's?",a:"Tarjan's: ONE DFS pass with low-link values. Slightly complex, no transposition needed. Both O(V+E). Tarjan's preferred for single-pass efficiency."}
+    ],
+    conclusion:"Kahn's topo sort and Kosaraju's SCC: O(V+E). Topological ordering for DAGs. SCC condensation simplifies complex directed graphs.",
+    paradigm:'Graph Algorithms',category:'Graph Algorithms'
+  },
+  30: {
+    title:'Backtracking — Subset Sum & Graph Coloring',exp:'Experiment No: 23',
+    aim:'To find all subsets summing to target and solve graph coloring using Backtracking.',
+    theory:'Backtracking builds solutions incrementally, abandons when constraints fail. Subset Sum: include/exclude each element; prune if sum>target; record if sum=target. Graph Coloring: assign colors 1..k; if no valid color for vertex, backtrack. Both NP-Complete; backtracking is standard exact approach.',
+    algorithm:['Subset Sum: solve(idx=0, path=[], sum=0)','If sum=target: record. If sum>target or idx=n: return','Include set[idx]: sum+=set[idx]; recurse(idx+1); backtrack','Exclude: recurse(idx+1)','Graph Coloring: for each vertex v, try colors 1..k','If safe(v,c): assign; recurse(v+1); unassign (backtrack)'],
+    pseudocode:'SUBSET_SUM(set,n,idx,path,sum,target):\n  if sum==target: output(path); return\n  if sum>target or idx>=n: return\n  SUBSET_SUM(set,n,idx+1,path+[set[idx]],sum+set[idx],target)  // include\n  SUBSET_SUM(set,n,idx+1,path,sum,target)  // exclude\n\nGRAPH_COLOR(v,n,k,colors,adj):\n  if v==n: output(colors); return\n  for c=1 to k:\n    if IS_SAFE(v,c): colors[v]=c; recurse(v+1); colors[v]=0',
+    complexity:{best:'O(2ⁿ) Subset',avg:'O(2ⁿ)',worst:'O(kⁿ) Coloring',space:'O(n) stack'},
+    applications:['Subset Sum: resource allocation','Graph Coloring: register allocation in compilers','Map coloring','Conflict scheduling'],
+    advantages:['Finds ALL solutions','Pruning dramatically reduces search','Correct and complete'],
+    disadvantages:['Exponential worst case','Stack overflow for large inputs'],
+    viva:[
+      {q:'Min colors for planar graph?',a:'4 colors — Four Color Theorem (proved 1976 by computer). Chromatic number ≤ 4 for all planar graphs.'},
+      {q:'Chromatic number?',a:'Minimum colors for proper coloring. Kₙ: n. Bipartite: 2. Computing it is NP-Hard.'},
+      {q:'Backtracking vs Branch and Bound?',a:'Backtracking: prune constraint violations. B&B: additionally prune using bounding function — estimates best achievable. B&B for optimization problems.'},
+      {q:'Is Subset Sum NP-Complete?',a:'Yes. Decision version is NP-Complete. Pseudo-polynomial DP O(n·T) exists for bounded T.'},
+      {q:'How pruning improves performance?',a:'For Subset Sum: if sum>target, no need to explore deeper. For Coloring: if k adjacent colors used, no valid color. Can reduce O(2ⁿ) dramatically in practice.'}
+    ],
+    conclusion:'Backtracking: complete exploration with constraint pruning. Subset Sum and Graph Coloring are NP-Complete — backtracking provides exact solutions.',
+    paradigm:'Backtracking',category:'Backtracking'
+  },
+  31: {
+    title:'Travelling Salesman Problem (Branch & Bound)',exp:'Experiment No: 24',
+    aim:'To find minimum cost Hamiltonian cycle using Branch and Bound algorithm.',
+    theory:'TSP: visit all n cities exactly once, return to start, minimum cost. Branch & Bound: explore search tree of partial paths. Lower Bound: current cost + minimum outgoing edges from unvisited cities. If LB≥best known cost, prune. NP-Hard — no known polynomial algorithm. B&B exponential worst case but practical for small n.',
+    algorithm:['Start from city 0; best_cost=∞','solve(path=[0],visited={0},cost=0)','Compute LB for current path','If LB≥best_cost: prune (return)','If all cities visited: update best if total<best_cost; return','For each unvisited city c: recurse with path+[c]','Print best_path and best_cost'],
+    pseudocode:'TSP_BB(path,visited,cost,n,dist):\n  lb=LOWER_BOUND(path,visited,dist,n)\n  if lb>=best_cost: return  // prune\n  if len(path)==n:\n    total=cost+dist[path[-1]][path[0]]\n    if total<best_cost: best_cost=total; best_path=path\n    return\n  for city=0 to n-1:\n    if city not in visited:\n      TSP_BB(path+[city],visited|{city},cost+dist[path[-1]][city],n,dist)',
+    complexity:{best:'O(n²) with pruning',avg:'O(2ⁿ·n²) Held-Karp',worst:'O(n!) brute force',space:'O(n) stack'},
+    applications:['Logistics route optimization','PCB drilling sequences','DNA fragment assembly','Vehicle routing'],
+    advantages:['Finds exact optimal','Pruning reduces search','Better than O(n!) in practice'],
+    disadvantages:['NP-Hard — no poly algorithm','Exponential worst case','Heuristics needed for large n'],
+    viva:[
+      {q:'Why is TSP NP-Hard?',a:'No polynomial algorithm known. TSP decision is NP-Complete. If P=NP, TSP becomes polynomial. Current best exact: Held-Karp O(2ⁿ·n²).'},
+      {q:'Held-Karp algorithm?',a:'DP: dp[S][i]=min cost starting at 0, visiting set S, ending at i. O(2ⁿ·n²) time, O(2ⁿ·n) space.'},
+      {q:'2-approximation for metric TSP?',a:'MST + DFS traversal (visits edges twice) + shortcut repeats. Tour ≤ 2×optimal. Christofides: 1.5×optimal.'},
+      {q:'Nearest neighbor heuristic?',a:'Always visit nearest unvisited city. O(n²), gives 25%+ above optimal. Useful for large n.'},
+      {q:'How LB affects B&B efficiency?',a:'Tighter LB prunes more branches. Loose LB (0) = no pruning = brute force. Good LB (MST of unvisited) dramatically reduces search.'}
+    ],
+    conclusion:'TSP is NP-Hard. B&B prunes O(n!) search using lower bounds. Held-Karp DP gives O(2ⁿ·n²) exact. Approximation algorithms for large instances.',
+    paradigm:'Branch and Bound',category:'Optimization'
+  },
+  32: {
+    title:'Radix Sort & Counting Sort',exp:'Experiment No: 25',
+    aim:'To sort arrays using Counting Sort O(n+k) and Radix Sort O(d(n+k)), non-comparison-based algorithms.',
+    theory:'Counting Sort: count freq[v] for each value, compute cumulative positions, place in output array. O(n+k), stable. Radix Sort (LSD): sort digit by digit from least to most significant using stable Counting Sort per digit. For d-digit numbers base b: O(d(n+b)). Both break comparison sort lower bound Ω(n log n) for integer keys.',
+    algorithm:['Counting Sort: count freq[A[i]]','Cumulative: freq[i]+=freq[i-1] for i=1..k','Output: for i=n-1 downto 0: out[--freq[A[i]]]=A[i]','Radix Sort: for exp=1; max/exp>0; exp×=10:','  Stable sort array by current digit (Counting Sort)','Repeat until all digits processed','Print sorted array'],
+    pseudocode:'COUNTING_SORT(A,n,k):\n  count[0..k]=0\n  for i=0..n-1: count[A[i]]++\n  for i=1..k: count[i]+=count[i-1]\n  for i=n-1 downto 0: out[--count[A[i]]]=A[i]\n  return out\n\nRADIX_SORT(A,n):\n  max=MAX(A)\n  for exp=1; max/exp>0; exp*=10:\n    COUNTING_SORT_BY_DIGIT(A,n,exp)',
+    complexity:{best:'O(n+k) Counting',avg:'O(d(n+k)) Radix',worst:'O(d(n+k))',space:'O(n+k)'},
+    applications:['Integer sorting in bounded range','Suffix array construction','Network packet sorting'],
+    advantages:['O(n+k) beats O(n log n) lower bound','Stable sorting','Excellent for bounded integer keys'],
+    disadvantages:['Only non-negative integers in bounded range','O(n+k) space','Degrades for large k'],
+    viva:[
+      {q:'Why not comparison-based?',a:'Uses element values as indices, not comparisons. Breaks Ω(n log n) lower bound.'},
+      {q:'Why stability important in Radix?',a:'LSD uses Counting Sort (stable) per digit. Stability preserves correct order of lower digits when sorting higher ones.'},
+      {q:'MSD vs LSD?',a:'LSD: right to left, simple, naturally stable. MSD: left to right, recursive per bucket, can terminate early.'},
+      {q:'Effective complexity for 32-bit integers?',a:'Base 256 (1 byte per pass): d=4 passes, k=256. O(4(n+256))=O(n). Approaches truly linear.'},
+      {q:'When prefer over Merge Sort?',a:'When n large and key range k=O(n). For floating point or variable keys: Merge Sort more appropriate.'}
+    ],
+    conclusion:'Counting and Radix Sort achieve linear time for bounded integer keys, breaking comparison sort lower bound. Stable, cache-friendly non-comparison sorts.',
+    paradigm:'Non-comparison Sorting',category:'Sorting'
+  },
+  33: {
+    title:'P, NP, NP-Complete & NP-Hard Theory',exp:'Experiment No: 26',
+    aim:'To understand complexity classes P, NP, NP-Complete, NP-Hard and the P vs NP question.',
+    theory:'P: solvable in polynomial time O(nᵏ). NP: verifiable in polynomial time. P⊆NP. NP-Complete: hardest in NP; every NP problem reduces to them. NP-Hard: at least as hard as NPC, may not be in NP. Cook-Levin (1971): SAT first NP-Complete. P vs NP: greatest unsolved problem. $1M Millennium Prize.',
+    algorithm:['For NP-Complete proof:','1. Show problem in NP (poly-time verifier)','2. Show known NP-Complete problem reduces to it in poly time','3. Reduction must be polynomial','For P: provide polynomial-time algorithm','For NP-Hard: reduction from known NPC problem'],
+    pseudocode:'NP-COMPLETENESS PROOF STRUCTURE:\n\n1. Problem in NP:\n   Given certificate, verify in O(n^k)\n\n2. Known NPC ≤_p New Problem:\n   Transform instance I of known NPC\n   to instance I\' of new problem in O(n^k)\n   such that I is YES ⟺ I\' is YES\n\nExample: SAT ≤_p 3-SAT ≤_p Clique ≤_p ...',
+    complexity:{best:'P: O(nᵏ) polynomial',avg:'NP: O(2^poly(n))',worst:'NP-Hard: no known poly',space:'P: poly | NP: poly verifier'},
+    applications:['Cryptography (RSA relies on NP-hardness)','Compiler register allocation','Planning/scheduling','Drug discovery'],
+    advantages:['Framework for impossibility proofs','NP-hardness justifies approximation/heuristics','Reductions prove new problems hard'],
+    disadvantages:['No efficient algorithms for NPC (unless P=NP)','Many practical instances are easy despite worst-case hardness'],
+    viva:[
+      {q:'Cook-Levin theorem?',a:'SAT is NP-Complete (1971). First NPC problem. All subsequent NPC proofs reduce from SAT or other known NPC problems.'},
+      {q:'If P=NP were proven?',a:'RSA broken, protein folding solved, all NP optimization efficient. Greatest math result ever. Millennium Prize $1M.'},
+      {q:'Polynomial-time reduction A≤pB?',a:'Transform any instance of A to B in poly time such that YES↔YES. If B∈P then A∈P. If A NP-Hard and A≤pB: B is NP-Hard.'},
+      {q:'0/1 Knapsack NP-Complete?',a:'Yes as decision problem. But O(nW) DP is pseudo-polynomial — not truly poly (W can be exponential in bit-length of input).'},
+      {q:'NP-Complete vs NP-Hard difference?',a:'NP-Complete = NP ∩ NP-Hard. NP-Hard: at least as hard as NPC but may not be in NP (e.g., Halting Problem — undecidable). All NPC are NP-Hard, not vice versa.'}
+    ],
+    conclusion:'P, NP, NPC, NP-Hard form computational complexity foundations. P vs NP remains open. NP-hardness guides use of approximation algorithms, heuristics, and exponential exact algorithms.',
+    paradigm:'Complexity Theory',category:'Theory'
+  }
+};
 
-// Build one <section> block: label + colored box containing arbitrary inner HTML
-function esSection(label, color, innerHTML){
-  color = color || '';
-  return '<div class="es-section">'
-    +'<div class="es-section-label'+(color?' '+color:'')+'">'+esEsc(label)+'</div>'
-    +'<div class="es-box'+(color?' '+color:'')+'">'+innerHTML+'</div>'
+// ─── SVG DIAGRAM GENERATORS (hand-drawn style via feTurbulence filter) ────────
+function svgSketchFilter(){
+  return '<defs><filter id="hw-sketch" x="-5%" y="-5%" width="110%" height="110%">'
+    +'<feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="5" result="noise"/>'
+    +'<feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G"/>'
+    +'</filter></defs>';
+}
+
+function svgBinarySearch(arr,target,lo,mid,hi){
+  if(!arr||!arr.length)return '';
+  var n=arr.length,cellW=Math.min(50,Math.floor(480/n)),cellH=44,padX=20,padY=52;
+  var W=n*cellW+padX*2+10;
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 '+W+' 140" font-family="Kalam,cursive">';
+  svg+=svgSketchFilter();
+  svg+='<g filter="url(#hw-sketch)">';
+  svg+='<text x="'+(W/2)+'" y="18" text-anchor="middle" fill="#1a237e" font-size="12" font-weight="bold">Binary Search — Array Diagram</text>';
+  for(var i=0;i<n;i++){
+    var x=padX+i*cellW,y=padY;
+    var fill=i===mid?'#bbdefb':(lo!==undefined&&(i<lo||i>hi))?'#eeeeee':'#fffde7';
+    var stroke=i===mid?'#1565c0':'#546e7a';
+    svg+='<rect x="'+x+'" y="'+y+'" width="'+cellW+'" height="'+cellH+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+(i===mid?2:1.5)+'"/>';
+    svg+='<text x="'+(x+cellW/2)+'" y="'+(y+28)+'" text-anchor="middle" fill="#1a237e" font-size="13" font-weight="bold">'+arr[i]+'</text>';
+    svg+='<text x="'+(x+cellW/2)+'" y="'+(y+cellH+14)+'" text-anchor="middle" fill="#78909c" font-size="10">'+i+'</text>';
+  }
+  function ptr(idx,label,color){if(idx<0||idx>=n)return;var x=padX+idx*cellW+cellW/2;svg+='<text x="'+x+'" y="'+(padY-16)+'" text-anchor="middle" fill="'+color+'" font-size="11" font-weight="bold">'+label+'</text><line x1="'+x+'" y1="'+(padY-8)+'" x2="'+x+'" y2="'+(padY-2)+'" stroke="'+color+'" stroke-width="2"/>';}
+  if(lo!==undefined&&lo>=0)ptr(lo,'L','#2e7d32');
+  if(mid!==undefined&&mid>=0)ptr(mid,'M','#1565c0');
+  if(hi!==undefined&&hi>=0)ptr(hi,'H','#b71c1c');
+  svg+='<text x="12" y="136" fill="#546e7a" font-size="10">Target = '+target+' | L=Low  M=Mid  H=High | Shaded=eliminated</text>';
+  svg+='</g></svg>';return svg;
+}
+
+function svgActivityTimeline(acts,selected){
+  if(!acts||!acts.length)return '';
+  var maxT=Math.max.apply(null,acts.map(function(a){return a.f||0;}))+1;
+  var W=500,rowH=26,padX=65,padY=34,timeW=W-padX-16;
+  var scale=timeW/maxT,H=padY+acts.length*rowH+36;
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 '+W+' '+H+'" font-family="Kalam,cursive">';
+  svg+=svgSketchFilter();svg+='<g filter="url(#hw-sketch)">';
+  svg+='<text x="'+(W/2)+'" y="20" text-anchor="middle" fill="#1a237e" font-size="12" font-weight="bold">Activity Selection — Timeline</text>';
+  svg+='<line x1="'+padX+'" y1="'+(padY-6)+'" x2="'+(W-10)+'" y2="'+(padY-6)+'" stroke="#546e7a" stroke-width="1.5"/>';
+  for(var t=0;t<=maxT;t+=Math.max(1,Math.floor(maxT/8))){var tx=padX+t*scale;svg+='<text x="'+tx+'" y="'+(padY-12)+'" text-anchor="middle" fill="#78909c" font-size="9">'+t+'</text><line x1="'+tx+'" y1="'+(padY-8)+'" x2="'+tx+'" y2="'+(padY-2)+'" stroke="#90a4ae" stroke-width="1"/>';}
+  acts.forEach(function(a,i){
+    var isSel=selected&&selected.some(function(s){return s.name===a.name;});
+    var y=padY+i*rowH,x1=padX+a.s*scale,x2=padX+a.f*scale;
+    svg+='<text x="'+(padX-5)+'" y="'+(y+rowH/2+4)+'" text-anchor="end" fill="#1a237e" font-size="11">'+a.name+'</text>';
+    svg+='<rect x="'+x1+'" y="'+(y+3)+'" width="'+(x2-x1)+'" height="'+(rowH-6)+'" fill="'+(isSel?'#a5d6a7':'#f5f5f5')+'" stroke="'+(isSel?'#2e7d32':'#90a4ae')+'" stroke-width="'+(isSel?2:1)+'" rx="2"/>';
+    svg+='<text x="'+((x1+x2)/2)+'" y="'+(y+rowH/2+4)+'" text-anchor="middle" fill="'+(isSel?'#1b5e20':'#546e7a')+'" font-size="9">['+a.s+','+a.f+']</text>';
+    if(isSel)svg+='<text x="'+(x2+4)+'" y="'+(y+rowH/2+4)+'" fill="#1b5e20" font-size="11">✓</text>';
+  });
+  svg+='</g></svg>';return svg;
+}
+
+function svgLCSTable(X,Y){
+  if(!X||!Y||X.length>10||Y.length>10)return '';
+  var m=X.length,n=Y.length,dp=[];
+  for(var i=0;i<=m;i++){dp.push([]);for(var j=0;j<=n;j++)dp[i].push(0);}
+  for(var i2=1;i2<=m;i2++)for(var j2=1;j2<=n;j2++){if(X[i2-1]===Y[j2-1])dp[i2][j2]=dp[i2-1][j2-1]+1;else dp[i2][j2]=Math.max(dp[i2-1][j2],dp[i2][j2-1]);}
+  var cW=30,cH=26,pX=28,pY=26,W=pX+(n+2)*cW+8,H=pY+(m+2)*cH+20;
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 '+W+' '+H+'" font-family="Kalam,cursive">';
+  svg+=svgSketchFilter();svg+='<g filter="url(#hw-sketch)">';
+  svg+='<text x="'+(W/2)+'" y="15" text-anchor="middle" fill="#1a237e" font-size="11" font-weight="bold">LCS DP Table</text>';
+  ['ε'].concat(Y.split('')).forEach(function(h,j){svg+='<text x="'+(pX+cW+(j)*cW+cW/2)+'" y="'+(pY+14)+'" text-anchor="middle" fill="#1565c0" font-size="11" font-weight="bold">'+h+'</text>';});
+  for(var i3=0;i3<=m;i3++){
+    svg+='<text x="'+(pX+cW/2)+'" y="'+(pY+cH+i3*cH+cH/2+4)+'" text-anchor="middle" fill="#f57c00" font-size="11" font-weight="bold">'+(i3===0?'ε':X[i3-1])+'</text>';
+    for(var j3=0;j3<=n;j3++){
+      var v=dp[i3][j3],cx=pX+cW+j3*cW,cy=pY+cH+i3*cH;
+      var isLCS=i3>0&&j3>0&&X[i3-1]===Y[j3-1]&&v===dp[i3-1][j3-1]+1&&v>0;
+      svg+='<rect x="'+cx+'" y="'+cy+'" width="'+cW+'" height="'+cH+'" fill="'+(isLCS?'#c8e6c9':'#fffde7')+'" stroke="#90a4ae" stroke-width="0.8"/>';
+      svg+='<text x="'+(cx+cW/2)+'" y="'+(cy+cH/2+4)+'" text-anchor="middle" fill="'+(isLCS?'#1b5e20':'#1a237e')+'" font-size="11" font-weight="bold">'+v+'</text>';
+    }
+  }
+  svg+='<text x="'+(W/2)+'" y="'+(H-4)+'" text-anchor="middle" fill="#78909c" font-size="9">Green = LCS characters found</text>';
+  svg+='</g></svg>';return svg;
+}
+
+function svgKnapsackDP(items,W){
+  if(!items||!items.length||W>16)return '';
+  var n=items.length,dp=[];
+  for(var i=0;i<=n;i++){dp.push([]);for(var w=0;w<=W;w++)dp[i].push(0);}
+  for(var i2=1;i2<=n;i2++)for(var w2=0;w2<=W;w2++){if(items[i2-1].w<=w2)dp[i2][w2]=Math.max(dp[i2-1][w2],dp[i2-1][w2-items[i2-1].w]+items[i2-1].v);else dp[i2][w2]=dp[i2-1][w2];}
+  var cW=Math.min(28,Math.floor(380/(W+2))),cH=22,pX=36,pY=26,svgW=pX+(W+1)*cW+8,svgH=pY+(n+2)*cH+16;
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 '+svgW+' '+svgH+'" font-family="Kalam,cursive">';
+  svg+=svgSketchFilter();svg+='<g filter="url(#hw-sketch)">';
+  svg+='<text x="'+(svgW/2)+'" y="15" text-anchor="middle" fill="#1a237e" font-size="10" font-weight="bold">0/1 Knapsack DP Table dp[i][w]</text>';
+  svg+='<text x="'+(pX/2)+'" y="'+(pY+14)+'" text-anchor="middle" fill="#1565c0" font-size="8">i\\w</text>';
+  for(var w=0;w<=W;w++)svg+='<text x="'+(pX+w*cW+cW/2)+'" y="'+(pY+14)+'" text-anchor="middle" fill="#1565c0" font-size="8">'+w+'</text>';
+  for(var i=0;i<=n;i++){
+    svg+='<text x="'+(pX/2)+'" y="'+(pY+cH+i*cH+cH/2+3)+'" text-anchor="middle" fill="#f57c00" font-size="8">'+(i===0?'0':items[i-1].name)+'</text>';
+    for(var w=0;w<=W;w++){var v=dp[i][w],cx=pX+w*cW,cy=pY+cH+i*cH,isOpt=i===n&&w===W;
+      svg+='<rect x="'+cx+'" y="'+cy+'" width="'+cW+'" height="'+cH+'" fill="'+(isOpt?'#a5d6a7':v>0?'#fffde7':'#f5f5f5')+'" stroke="#90a4ae" stroke-width="0.6"/>';
+      svg+='<text x="'+(cx+cW/2)+'" y="'+(cy+cH/2+3)+'" text-anchor="middle" fill="'+(isOpt?'#1b5e20':'#1a237e')+'" font-size="8">'+v+'</text>';}
+  }
+  svg+='</g></svg>';return svg;
+}
+
+function svgCoinChangeDP(coins,amount){
+  if(!coins||!coins.length||amount<1||amount>28)return '';
+  var dp=new Array(amount+1).fill(Infinity);dp[0]=0;
+  for(var i=1;i<=amount;i++)for(var ci=0;ci<coins.length;ci++){if(coins[ci]<=i&&dp[i-coins[ci]]+1<dp[i])dp[i]=dp[i-coins[ci]]+1;}
+  var cW=Math.min(30,Math.floor(450/(amount+2))),cH=38,pX=16,pY=32,W=pX+(amount+1)*cW+16;
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 '+W+' 96" font-family="Kalam,cursive">';
+  svg+=svgSketchFilter();svg+='<g filter="url(#hw-sketch)">';
+  svg+='<text x="'+(W/2)+'" y="18" text-anchor="middle" fill="#1a237e" font-size="11" font-weight="bold">Coin Change DP Array — coins: {'+coins.join(', ')+'}</text>';
+  for(var i=0;i<=amount;i++){var v=dp[i],x=pX+i*cW,y=pY,isOpt=i===amount&&v<Infinity;
+    svg+='<rect x="'+x+'" y="'+y+'" width="'+cW+'" height="'+cH+'" fill="'+(isOpt?'#a5d6a7':v<Infinity&&v>0?'#fffde7':'#f5f5f5')+'" stroke="#90a4ae" stroke-width="0.8"/>';
+    svg+='<text x="'+(x+cW/2)+'" y="'+(y+22)+'" text-anchor="middle" fill="'+(isOpt?'#1b5e20':'#1a237e')+'" font-size="'+(cW>24?10:8)+'" font-weight="bold">'+(v>=Infinity?'∞':v)+'</text>';
+    svg+='<text x="'+(x+cW/2)+'" y="'+(y+cH+12)+'" text-anchor="middle" fill="#78909c" font-size="8">'+i+'</text>';
+  }
+  svg+='</g></svg>';return svg;
+}
+
+function svgJobSlots(slots){
+  if(!slots||!slots.length)return '';
+  var n=slots.length,sW=Math.min(80,Math.floor(480/n)),sH=50,pX=20,pY=36,gap=8;
+  var W=pX+n*(sW+gap)+16;
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 '+W+' 110" font-family="Kalam,cursive">';
+  svg+=svgSketchFilter();svg+='<g filter="url(#hw-sketch)">';
+  svg+='<text x="'+(W/2)+'" y="22" text-anchor="middle" fill="#1a237e" font-size="12" font-weight="bold">Job Scheduling — Slot Allocation</text>';
+  slots.forEach(function(job,i){var x=pX+i*(sW+gap),y=pY;
+    svg+='<rect x="'+x+'" y="'+y+'" width="'+sW+'" height="'+sH+'" fill="'+(job?'#b3e5fc':'#f5f5f5')+'" stroke="'+(job?'#0288d1':'#90a4ae')+'" stroke-width="'+(job?2:1)+'" rx="4"/>';
+    svg+='<text x="'+(x+sW/2)+'" y="'+(y+22)+'" text-anchor="middle" fill="'+(job?'#01579b':'#90a4ae')+'" font-size="12" font-weight="bold">'+(job?job.name:'—')+'</text>';
+    if(job)svg+='<text x="'+(x+sW/2)+'" y="'+(y+38)+'" text-anchor="middle" fill="#0277bd" font-size="10">p='+job.p+'</text>';
+    svg+='<text x="'+(x+sW/2)+'" y="'+(y+sH+16)+'" text-anchor="middle" fill="#546e7a" font-size="10">Slot '+(i+1)+'</text>';
+  });
+  svg+='</g></svg>';return svg;
+}
+
+function svgQuickSortArray(arr){
+  if(!arr||!arr.length)return '';
+  var n=arr.length,cW=Math.min(48,Math.floor(460/n)),cH=50,pX=18,pY=30;
+  var W=pX+n*cW+18,maxV=Math.max.apply(null,arr.concat([1]));
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 '+W+' 120" font-family="Kalam,cursive">';
+  svg+=svgSketchFilter();svg+='<g filter="url(#hw-sketch)">';
+  svg+='<text x="'+(W/2)+'" y="18" text-anchor="middle" fill="#1a237e" font-size="11" font-weight="bold">Quick Sort — Pivot = '+arr[n-1]+'</text>';
+  arr.forEach(function(v,i){var x=pX+i*cW,y=pY,isPiv=i===n-1,fill=isPiv?'#ff8a65':v<arr[n-1]?'#b3e5fc':'#f5f5f5';
+    svg+='<rect x="'+x+'" y="'+y+'" width="'+cW+'" height="'+cH+'" fill="'+fill+'" stroke="'+(isPiv?'#bf360c':'#546e7a')+'" stroke-width="'+(isPiv?2:1.5)+'" rx="2"/>';
+    var bH=Math.max(4,Math.floor((v/maxV)*(cH-12)));
+    svg+='<rect x="'+(x+3)+'" y="'+(y+cH-bH-2)+'" width="'+(cW-6)+'" height="'+bH+'" fill="'+(isPiv?'#bf360c':v<arr[n-1]?'#0288d1':'#78909c')+'" rx="2" opacity="0.6"/>';
+    svg+='<text x="'+(x+cW/2)+'" y="'+(y+cH+14)+'" text-anchor="middle" fill="'+(isPiv?'#bf360c':'#1a237e')+'" font-size="12" font-weight="bold">'+v+'</text>';
+    if(isPiv)svg+='<text x="'+(x+cW/2)+'" y="'+(y-6)+'" text-anchor="middle" fill="#bf360c" font-size="9" font-weight="bold">PIVOT</text>';
+  });
+  svg+='<text x="12" y="116" fill="#78909c" font-size="9">Blue=≤pivot | Gray=>pivot | Orange=pivot element</text>';
+  svg+='</g></svg>';return svg;
+}
+
+function svgFlowchart(steps){
+  if(!steps||!steps.length)return '';
+  var bW=200,bH=36,pX=60,gap=48,W=bW+pX*2;
+  var H=40+(steps.length*(bH+gap))+20;
+  var cx=pX+bW/2;
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 '+W+' '+H+'" font-family="Kalam,cursive">';
+  svg+=svgSketchFilter();
+  svg+='<defs><marker id="fcarr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M1,2 L7,4 L1,6 Z" fill="#1a237e"/></marker></defs>';
+  svg+='<g filter="url(#hw-sketch)">';
+  steps.forEach(function(step,i){
+    var y=30+i*(bH+gap);
+    if(step.type==='terminal')svg+='<ellipse cx="'+cx+'" cy="'+(y+bH/2)+'" rx="'+(bW/2)+'" ry="'+(bH/2)+'" fill="#e8f4fd" stroke="#1a237e" stroke-width="1.5"/>';
+    else if(step.type==='decision')svg+='<polygon points="'+cx+','+y+' '+(cx+bW/2)+','+(y+bH/2)+' '+cx+','+(y+bH)+' '+(cx-bW/2)+','+(y+bH/2)+'" fill="#fffde7" stroke="#1a237e" stroke-width="1.5"/>';
+    else svg+='<rect x="'+pX+'" y="'+y+'" width="'+bW+'" height="'+bH+'" fill="#ffffff" stroke="#1a237e" stroke-width="1.5" rx="3"/>';
+    svg+='<text x="'+cx+'" y="'+(y+bH/2+4)+'" text-anchor="middle" fill="#1a237e" font-size="11">'+step.text+'</text>';
+    if(i<steps.length-1)svg+='<line x1="'+cx+'" y1="'+(y+bH)+'" x2="'+cx+'" y2="'+(y+bH+gap-8)+'" stroke="#1a237e" stroke-width="1.5" marker-end="url(#fcarr)"/>';
+  });
+  svg+='</g></svg>';return svg;
+}
+
+// ─── HANDWRITTEN HTML BUILDERS ────────────────────────────────────────────────
+function hwEsc(s){return String(s===undefined||s===null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function hwSectionLabel(label){
+  return '<div class="hw-section-label"><span class="hw-label-arrow">▷</span>'+hwEsc(label)+'</div>';
+}
+
+function hwParagraph(text){return '<p class="hw-para">'+hwEsc(text)+'</p>';}
+
+function hwAlgoSteps(steps){
+  var h='<ol class="hw-algo-list">';
+  steps.forEach(function(s){h+='<li class="hw-algo-step">'+hwEsc(s)+'</li>';});
+  return h+'</ol>';
+}
+
+function hwPseudocode(code){
+  return '<div class="hw-pseudo-wrap"><div class="hw-pseudo-label">PSEUDOCODE:</div><pre class="hw-pre">'+hwEsc(code)+'</pre></div>';
+}
+
+function hwComplexityTable(cx){
+  return '<div class="hw-cx-table">'
+    +'<div class="hw-cx-row"><div class="hw-cx-case">Best Case :</div><div class="hw-cx-val">'+hwEsc(cx.best)+'</div></div>'
+    +'<div class="hw-cx-row"><div class="hw-cx-case">Average Case :</div><div class="hw-cx-val">'+hwEsc(cx.avg)+'</div></div>'
+    +'<div class="hw-cx-row"><div class="hw-cx-case">Worst Case :</div><div class="hw-cx-val">'+hwEsc(cx.worst)+'</div></div>'
+    +'<div class="hw-cx-row hw-cx-space"><div class="hw-cx-case">Space Complexity :</div><div class="hw-cx-val">'+hwEsc(cx.space)+'</div></div>'
     +'</div>';
 }
 
-// Build a data table from header array + 2D row array. cellClassFn(r,c,val)=>extra class
-function esTable(headers, rows, cellClassFn){
-  var h='<table class="es-table"><thead><tr>';
-  headers.forEach(function(hd){ h+='<th>'+esEsc(hd)+'</th>'; });
+function hwBulletList(items,color){
+  color=color||'#1a237e';
+  var h='<ul class="hw-ul">';
+  items.forEach(function(it){h+='<li style="color:'+color+'"><span class="hw-bullet">✦</span> '+hwEsc(it)+'</li>';});
+  return h+'</ul>';
+}
+
+function hwVivaSection(meta){
+  var h='<div class="hw-viva">';
+  meta.viva.forEach(function(qa,i){
+    h+='<div class="hw-viva-q"><span class="hw-q-num">Q'+(i+1)+'.</span> '+hwEsc(qa.q)+'</div>';
+    h+='<div class="hw-viva-a"><span class="hw-a-lbl">Ans:</span> '+hwEsc(qa.a)+'</div>';
+  });
+  return h+'</div>';
+}
+
+function hwMarkAnswers(meta){
+  var h='<div class="hw-marks">';
+  h+='<div class="hw-mark-section"><span class="hw-mark-badge">2 Marks</span><div class="hw-mark-ans">'+hwEsc(meta.aim)+'</div></div>';
+  h+='<div class="hw-mark-section"><span class="hw-mark-badge">3 Marks</span><div class="hw-mark-ans">'+hwEsc(meta.theory.substring(0,280))+'</div></div>';
+  var algoText='Algorithm: '+meta.algorithm.map(function(s,i){return (i+1)+'. '+s;}).join(' ');
+  h+='<div class="hw-mark-section"><span class="hw-mark-badge">7 Marks</span><div class="hw-mark-ans">'+hwEsc(meta.theory)+'<br><br>'+hwEsc(algoText)+'</div></div>';
+  h+='<div class="hw-mark-section"><span class="hw-mark-badge">14 Marks</span><div class="hw-mark-ans">Complete solution — Aim, Theory, Algorithm, Pseudocode, Dry Run with tables, Complexity Analysis, Applications, Advantages, Disadvantages, Conclusion. See all sections above.</div></div>';
+  return h+'</div>';
+}
+
+function hwDryRunTable(headers,rows){
+  if(!rows||!rows.length)return '';
+  var h='<div class="hw-table-wrap"><table class="hw-table"><thead><tr>';
+  headers.forEach(function(hd){h+='<th>'+hwEsc(hd)+'</th>';});
   h+='</tr></thead><tbody>';
-  rows.forEach(function(row,r){
-    h+='<tr>';
-    row.forEach(function(val,c){
-      var cls=cellClassFn?cellClassFn(r,c,val):'';
-      h+='<td'+(cls?(' class="'+cls+'"'):'')+'>'+esEsc(val)+'</td>';
-    });
-    h+='</tr>';
-  });
-  h+='</tbody></table>';
-  return h;
+  rows.forEach(function(row,ri){h+='<tr>'+(row.map(function(c){return '<td>'+hwEsc(c)+'</td>';}).join(''))+'</tr>';});
+  return h+'</tbody></table></div>';
 }
 
-// Final answer hero box
-function esFinalAnswer(label, value){
-  return '<div class="es-finalanswer"><span class="es-fa-label">'+esEsc(label)+'</span>'+value+'</div>';
+function hwSVGBlock(svgContent,caption){
+  return '<div class="hw-svg-block">'+svgContent+(caption?'<div class="hw-svg-caption">Fig: '+hwEsc(caption)+'</div>':'')+'</div>';
 }
 
-// Complexity grid (array of {val,lbl})
-function esComplexityGrid(items){
-  var h='<div class="es-cxgrid">';
-  items.forEach(function(it){
-    h+='<div class="es-cxbox"><div class="es-cx-val">'+esEsc(it.val)+'</div><div class="es-cx-lbl">'+esEsc(it.lbl)+'</div></div>';
-  });
-  h+='</div>';
-  return h;
+function hwResult(label,value){
+  return '<div class="hw-result"><div class="hw-result-label">∴ '+hwEsc(label)+'</div><div class="hw-result-val">'+hwEsc(value)+'</div></div>';
 }
 
-// Step log list -> styled lines
-function esStepLog(steps){
-  var h='<div class="es-steplog">';
-  steps.forEach(function(s,i){ h+='<div><span class="step-num">Step '+(i+1)+':</span> '+esEsc(s)+'</div>'; });
-  h+='</div>';
-  return h;
+// ─── DRY RUN FROM STATE ───────────────────────────────────────────────────────
+function buildDryRun(toolIdx){
+  try{
+    if(toolIdx===4){
+      var arrEl=document.getElementById('bs-array'),targEl=document.getElementById('bs-target');
+      var arr=(arrEl?arrEl.value:'').split(',').map(function(s){return parseInt(s.trim());}).filter(function(x){return !isNaN(x);}).sort(function(a,b){return a-b;});
+      var target=parseInt(targEl?targEl.value:0)||0;
+      var rows=[],lo=0,hi=arr.length-1,iter=1;
+      while(lo<=hi&&iter<=20){var mid=Math.floor((lo+hi)/2),act=arr[mid]===target?'FOUND ✓':arr[mid]<target?'Go Right →':'Go Left ←';rows.push([iter,lo,hi,mid,arr[mid],target,act]);if(arr[mid]===target)break;else if(arr[mid]<target)lo=mid+1;else hi=mid-1;iter++;}
+      return {svg:svgBinarySearch(arr,target,lo,rows.length>0?parseInt(rows[rows.length-1][3]):-1,hi),table:hwDryRunTable(['Step','Low','High','Mid','A[mid]','Target','Action'],rows)};
+    }
+    if(toolIdx===0){
+      var arr2=(sortArray||[]),comps=document.getElementById('stat-comparisons')?document.getElementById('stat-comparisons').textContent:'—',swps=document.getElementById('stat-swaps')?document.getElementById('stat-swaps').textContent:'—';
+      return {svg:svgQuickSortArray(arr2),table:hwDryRunTable(['Comparisons','Swaps','Array Accesses','Current State'],[[comps,swps,document.getElementById('stat-accesses')?document.getElementById('stat-accesses').textContent:'—',arr2.join(', ')]])};
+    }
+    if(toolIdx===3){var xEl=document.getElementById('lcs-x'),yEl=document.getElementById('lcs-y'),X=(xEl?xEl.value:'').toUpperCase().replace(/[^A-Z]/g,'').slice(0,8),Y=(yEl?yEl.value:'').toUpperCase().replace(/[^A-Z]/g,'').slice(0,8);return {svg:svgLCSTable(X,Y),table:''};}
+    if(toolIdx===1){var items=(ksItems||[]),W=parseInt(document.getElementById('ks-capacity')?document.getElementById('ks-capacity').value:0)||0;return {svg:svgKnapsackDP(items,Math.min(W,16)),table:hwDryRunTable(['Item','Weight (wᵢ)','Value (vᵢ)','v/w'],items.map(function(it){return [it.name,it.w,it.v,(it.v/it.w).toFixed(2)];}))}}
+    if(toolIdx===6){var arr3=(qsArray||[]);return {svg:svgQuickSortArray(arr3),table:hwDryRunTable(['Step','Array State','Pivot','Comparisons','Swaps'],[['Initial','['+arr3.join(',')+']',arr3[arr3.length-1]||'—','0','0'],['Final','['+arr3.slice().sort(function(a,b){return a-b;}).join(',')+']','—',qsComparisons||'—',qsSwaps||'—']])};}
+    if(toolIdx===8){var acts=(actData||[]).filter(function(a){return a.f>a.s;}).sort(function(a,b){return a.f-b.f;});var sel=[],lastF=-Infinity;acts.forEach(function(a){if(a.s>=lastF){sel.push(a);lastF=a.f;}});return {svg:svgActivityTimeline(acts,sel),table:hwDryRunTable(['Activity','Start sᵢ','Finish fᵢ','Selected?','Reason'],acts.map(function(a,i){var isSel=sel.some(function(s){return s.name===a.name;});return [a.name,a.s,a.f,isSel?'✅ Yes':'❌ No',i===0?'First (always)':(isSel?'start≥lastFinish':'start<lastFinish')];}))}}
+    if(toolIdx===11){var coinsEl=document.getElementById('cc-coins'),amtEl=document.getElementById('cc-amount'),coins=(coinsEl?coinsEl.value:'').split(',').map(function(s){return parseInt(s.trim());}).filter(function(x){return !isNaN(x)&&x>0;}),amount=parseInt(amtEl?amtEl.value:0)||0;return {svg:svgCoinChangeDP(coins,Math.min(amount,28)),table:''};}
+    if(toolIdx===12){var jobs=(jsData||[]).filter(function(j){return j.d>0&&j.p>0;}).sort(function(a,b){return b.p-a.p;});var maxD=jobs.length?Math.max.apply(null,jobs.map(function(j){return j.d;})):0;var slots=new Array(maxD).fill(null),schd=[];jobs.forEach(function(job){for(var t=Math.min(job.d-1,maxD-1);t>=0;t--){if(slots[t]===null){slots[t]=job;schd.push({job:job,slot:t+1});break;}}});return {svg:svgJobSlots(slots),table:hwDryRunTable(['Job (sorted by profit)','Profit','Deadline','Slot','Status'],jobs.map(function(j){var a=schd.find(function(s){return s.job.name===j.name;});return [j.name,j.p,j.d,a?a.slot:'—',a?'✅ Selected':'❌ Rejected'];}))}}
+    if(toolIdx===7){var items=(fkItems||[]).filter(function(x){return x.w>0&&x.v>0;}).map(function(it){return Object.assign({},it,{ratio:(it.v/it.w).toFixed(2)});}).sort(function(a,b){return b.ratio-a.ratio;});return {svg:'',table:hwDryRunTable(['Item','Weight','Value','v/w Ratio','Action'],items.map(function(it,i){return [it.name,it.w,it.v,it.ratio,'Include']}))};}
+  }catch(e){console.warn('DryRun err:',e);}
+  return {svg:'',table:''};
 }
 
-// Image (data URL) wrapped box, optional second image for side-by-side
-function esDiagramRow(images){
-  // images: array of {label, dataUrl}
-  if(images.length===1){
-    return '<div class="es-imgwrap"><div style="font-size:10px;color:#64748b;margin-bottom:6px;font-family:JetBrains Mono,monospace">'+esEsc(images[0].label||'')+'</div><img src="'+images[0].dataUrl+'"></div>';
-  }
-  var h='<div class="es-grid2">';
-  images.forEach(function(im){
-    h+='<div class="es-imgwrap"><div style="font-size:10px;color:#64748b;margin-bottom:6px;font-family:JetBrains Mono,monospace">'+esEsc(im.label||'')+'</div><img src="'+im.dataUrl+'"></div>';
-  });
-  h+='</div>';
-  return h;
+// ─── EXAM CONTENT GENERATOR ───────────────────────────────────────────────────
+function buildExamContent(toolIdx,title){
+  var meta=ALGO_META[toolIdx];
+  if(!meta)return '<p class="hw-para">Run the simulator with your input before exporting.</p>';
+  var dr=buildDryRun(toolIdx);
+  var flowSteps=[{type:'terminal',text:'START'},{type:'process',text:'Read Input Data'},{type:'decision',text:'Valid Input?'},{type:'process',text:'Initialize Variables'},{type:'process',text:'Execute Core Algorithm'},{type:'decision',text:'Termination?'},{type:'process',text:'Compute Result'},{type:'terminal',text:'STOP'}];
+  var html='';
+  html+=hwSectionLabel('AIM');
+  html+=hwParagraph(meta.aim);
+  html+=hwSectionLabel('THEORY');
+  html+=hwParagraph(meta.theory);
+  html+=hwSectionLabel('ALGORITHM');
+  html+=hwAlgoSteps(meta.algorithm);
+  html+=hwSectionLabel('PSEUDOCODE');
+  html+=hwPseudocode(meta.pseudocode);
+  html+=hwSectionLabel('FLOWCHART');
+  html+=hwSVGBlock(svgFlowchart(flowSteps),'Flowchart — '+title);
+  html+=hwSectionLabel('DRY RUN / ITERATION TABLE');
+  if(dr.svg)html+=hwSVGBlock(dr.svg,'Step-by-step diagram');
+  if(dr.table)html+=dr.table;
+  else html+=hwParagraph('Enter input in the simulator and run it, then export to see the auto-generated iteration table.');
+  html+=hwSectionLabel('DIAGRAM / VISUALIZATION');
+  var tool=document.getElementById('tool-'+toolIdx),canvases=tool?tool.querySelectorAll('canvas'):[];
+  canvases.forEach(function(c){if(c.width>50&&c.height>50){try{var cv=document.createElement('canvas');cv.width=c.width;cv.height=c.height;var ctx=cv.getContext('2d');ctx.fillStyle='#fffef5';ctx.fillRect(0,0,cv.width,cv.height);ctx.drawImage(c,0,0);html+='<div class="hw-canvas-img"><img src="'+cv.toDataURL('image/png')+'" style="max-width:100%;border:1.5px solid #90a4ae;border-radius:4px"></div>';}catch(e){}}});
+  html+=hwSectionLabel('COMPLEXITY ANALYSIS');
+  html+=hwComplexityTable(meta.complexity);
+  html+=hwSectionLabel('APPLICATIONS');
+  html+=hwBulletList(meta.applications,'#1565c0');
+  html+=hwSectionLabel('ADVANTAGES');
+  html+=hwBulletList(meta.advantages,'#2e7d32');
+  html+=hwSectionLabel('DISADVANTAGES');
+  html+=hwBulletList(meta.disadvantages,'#b71c1c');
+  html+=hwSectionLabel('MARK-WISE ANSWERS (GTU Exam Preparation)');
+  html+=hwMarkAnswers(meta);
+  html+=hwSectionLabel('VIVA QUESTIONS & ANSWERS');
+  html+=hwVivaSection(meta);
+  html+=hwSectionLabel('GTU EXAM TIPS');
+  html+='<div class="hw-tips">'
+    +'<div class="hw-tip">📌 Always state the paradigm: '+hwEsc(meta.paradigm)+'</div>'
+    +'<div class="hw-tip">📌 Write recurrence/formula before algorithm steps</div>'
+    +'<div class="hw-tip">📌 Draw the DP table / execution trace — carries 30% marks</div>'
+    +'<div class="hw-tip">📌 State all complexities: Best, Average, Worst + Space</div>'
+    +'<div class="hw-tip">📌 Write clear conclusion: "Hence '+hwEsc(title)+' is implemented using '+hwEsc(meta.paradigm)+' technique."</div>'
+    +'</div>';
+  html+=hwSectionLabel('CONCLUSION');
+  html+=hwParagraph(meta.conclusion);
+  html+=hwResult('Result','The '+title+' was successfully studied and implemented using '+meta.paradigm+' technique. Time Complexity: '+meta.complexity.worst+'. Space Complexity: '+meta.complexity.space+'.');
+  return html;
 }
 
-// Grab a canvas as data URL on a light background (so dark-canvas drawings show up on white)
-function esCanvasToImg(canvasEl, bg){
-  if(!canvasEl||!canvasEl.width||!canvasEl.height) return null;
-  var c=document.createElement('canvas');
-  c.width=canvasEl.width; c.height=canvasEl.height;
-  var ctx=c.getContext('2d');
-  ctx.fillStyle=bg||'#0a0e1a';
-  ctx.fillRect(0,0,c.width,c.height);
-  ctx.drawImage(canvasEl,0,0);
-  return c.toDataURL('image/png');
-}
-
-// Master assembler: builds the full .examsheet DOM node
-function esBuildSheet(title, subtitle, sectionsHTML){
+// ─── SHEET ASSEMBLER ──────────────────────────────────────────────────────────
+function buildExamSheet(toolIdx,title){
+  var meta=ALGO_META[toolIdx]||{};
   var now=new Date();
   var sheet=document.createElement('div');
-  sheet.className='examsheet';
-  sheet.innerHTML =
-    '<div class="es-header">'
-      +'<div class="es-brand">⚡ ADA <span>ALGORITHM LAB</span></div>'
-      +'<div class="es-meta">GTU · 3150703 — Design &amp; Analysis of Algorithms<br>Generated: '+now.toLocaleString()+'</div>'
+  sheet.className='hw-sheet';
+  sheet.innerHTML=
+    '<div class="hw-margin-line"></div>'
+    +'<div class="hw-ruled-lines"></div>'
+    +'<div class="hw-page-header">'
+      +'<div class="hw-college-name">GTU — Design &amp; Analysis of Algorithms (3150703)</div>'
+      +'<div class="hw-header-meta">'
+        +'<div>Date: '+now.toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'})+'</div>'
+        +'<div>Page: 1</div>'
+      +'</div>'
     +'</div>'
-    +'<div class="es-titleband">'+esEsc(title)
-      +(subtitle?'<div class="es-subtitle">'+esEsc(subtitle)+'</div>':'')
+    +'<div class="hw-exp-info">'
+      +(meta.exp||'Experiment')+'&nbsp;&nbsp;&nbsp;'
+      +'<span class="hw-exp-title">'+title+'</span>'
+      +(meta.category?'&nbsp;|&nbsp;<em>'+meta.category+' — '+meta.paradigm+'</em>':'')
     +'</div>'
-    + sectionsHTML
-    +'<div class="es-footer">Prepared with ADA Algorithm Lab · For revision &amp; exam-practice purposes · Verify against your course material</div>';
+    +'<div class="hw-content">'+buildExamContent(toolIdx,title)+'</div>'
+    +'<div class="hw-page-footer">'
+      +'<span>⚡ ADA Algorithm Lab — GTU 3150703</span>'
+      +'<span>Generated: '+now.toLocaleDateString('en-IN')+'</span>'
+    +'</div>';
   return sheet;
 }
 
-// ═══════════════════════════════════════════════════════════
-// PER-TOOL DATA COLLECTORS → return sectionsHTML string
-// Each collector reads live state/DOM and renders exam-style sections.
-// Falls back to genericCollector() if no specific collector exists.
-// ═══════════════════════════════════════════════════════════
-
-function esCollect_sorting(){
-  var algo = document.getElementById('sort-algo').value;
-  var algoNames = {bubble:'Bubble Sort',selection:'Selection Sort',insertion:'Insertion Sort',merge:'Merge Sort',heap:'Heap Sort',counting:'Counting Sort',bucket:'Bucket Sort'};
-  var cx = sortComplexities[algo] || {best:'-',avg:'-',worst:'-'};
-  var arr = (sortArray||[]).join(', ');
-  var comparisons = document.getElementById('stat-comparisons').textContent;
-  var swaps = document.getElementById('stat-swaps').textContent;
-  var accesses = document.getElementById('stat-accesses').textContent;
-
-  var s='';
-  s += esSection('Question', '', 'Sort the given array using <b>'+algoNames[algo]+'</b> and show the step-by-step working.');
-  s += esSection('Given Input Array', 'gold', '<div style="font-family:JetBrains Mono,monospace;font-size:14px;text-align:center;letter-spacing:2px">[ '+esEsc(arr)+' ]</div>');
-
-  var img = esCanvasToImg(sortCanvas);
-  if(img) s += esSection('Visualization — Final Arrangement', 'purple', esDiagramRow([{label:'Array bar chart (current state)', dataUrl:img}]));
-
-  s += esSection('Working / Statistics', 'teal', esTable(
-    ['Metric','Value'],
-    [['Algorithm', algoNames[algo]],['Comparisons', comparisons],['Swaps / Shifts', swaps],['Array Accesses', accesses],['Array Size', (sortArray||[]).length]]
-  ));
-
-  var sorted = (sortArray||[]).slice().sort(function(a,b){return a-b;}).join(', ');
-  s += esFinalAnswer('Final Sorted Array', '[ '+esEsc(sorted)+' ]');
-
-  s += esSection('Complexity Analysis', 'green', esComplexityGrid([
-    {val:cx.best,lbl:'Best Case'},{val:cx.avg,lbl:'Average Case'},{val:cx.worst,lbl:'Worst Case'}
-  ]));
-  return s;
+// ─── EXPORT MENU ──────────────────────────────────────────────────────────────
+function showExportMenu(toolIdx,title){
+  var ex=document.getElementById('hw-export-menu');if(ex)ex.remove();
+  var menu=document.createElement('div');menu.id='hw-export-menu';
+  menu.innerHTML=
+    '<div class="hw-menu-backdrop" onclick="document.getElementById(\'hw-export-menu\').remove()"></div>'
+    +'<div class="hw-menu-box">'
+      +'<div class="hw-menu-title">Export — <em>'+hwEsc(title)+'</em></div>'
+      +'<button class="hw-menu-btn hw-btn-exam" onclick="exportHandwrittenPDF('+toolIdx+',\''+title.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">'
+        +'✍️ <strong>Handwritten Exam Journal PDF</strong>'
+        +'<div class="hw-btn-desc">Aim · Theory · Algorithm · Pseudocode · Flowchart · Dry Run · Complexity · Viva · GTU Tips</div>'
+      +'</button>'
+      +'<button class="hw-menu-btn hw-btn-viva" onclick="exportVivaPDF('+toolIdx+',\''+title.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">'
+        +'🎓 <strong>Viva Preparation PDF</strong>'
+        +'<div class="hw-btn-desc">5 Viva Q&A · Mark-wise answers (2,3,7,14 marks) · Complexity summary</div>'
+      +'</button>'
+      +'<button class="hw-menu-btn hw-btn-viz" onclick="exportVisualizationPDF('+toolIdx+',\''+title.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">'
+        +'📊 <strong>Visualization PDF</strong>'
+        +'<div class="hw-btn-desc">Canvas screenshots · Complexity table · Applications</div>'
+      +'</button>'
+      +'<button class="hw-menu-close" onclick="document.getElementById(\'hw-export-menu\').remove()">✕ Close</button>'
+    +'</div>';
+  document.body.appendChild(menu);
 }
 
-function esCollect_knapsack(){
-  var W = parseInt(document.getElementById('ks-capacity').value)||0;
-  var items = ksItems;
-  var s='';
-  s += esSection('Question', '', 'Solve the 0/1 Knapsack problem for capacity <b>W = '+W+'</b> using Dynamic Programming. Find the maximum profit and the items selected.');
-
-  s += esSection('Given Items', 'gold', esTable(
-    ['Item','Weight (w)','Value (v)'],
-    items.map(function(it){ return [it.name, it.w, it.v]; })
-  ));
-
-  // DP table (if solved)
-  var dpCard=document.getElementById('ks-dp-card');
-  var dpTableHtml='';
-  if(dpCard && dpCard.style.display!=='none'){
-    var dpTable=document.getElementById('ks-dp-table');
-    if(dpTable){
-      // Extract DP table into header/rows generically from rendered table
-      var rows=[];
-      var headers=[];
-      var trs=dpTable.querySelectorAll('tr');
-      trs.forEach(function(tr,ri){
-        var cells=[];
-        tr.querySelectorAll('th,td').forEach(function(c){ cells.push(c.textContent.trim()); });
-        if(ri===0) headers=cells; else rows.push(cells);
-      });
-      if(headers.length) dpTableHtml = esTable(headers, rows, function(r,c,val){
-        return (rows[r][0]==='' && c===0) ? '' : '';
-      });
-    }
+// ─── MULTI-PAGE PDF HELPER ────────────────────────────────────────────────────
+async function renderMultiPagePDF(sheet,filename){
+  document.body.appendChild(sheet);
+  await new Promise(function(r){setTimeout(r,250);});
+  var fullCanvas=await html2canvas(sheet,{backgroundColor:'#fffef7',scale:2,useCORS:true,logging:false,allowTaint:true});
+  document.body.removeChild(sheet);
+  var {jsPDF}=window.jspdf;
+  var pdf=new jsPDF('p','mm','a4');
+  var pageW=pdf.internal.pageSize.getWidth(),pageH=pdf.internal.pageSize.getHeight(),margin=6;
+  var availW=pageW-margin*2,availH=pageH-margin*2;
+  var pxPerMM=fullCanvas.width/availW;
+  var sliceHeightPx=Math.floor(availH*pxPerMM);
+  var totalPages=Math.ceil(fullCanvas.height/sliceHeightPx);
+  for(var p=0;p<totalPages;p++){
+    var startY=p*sliceHeightPx,endY=Math.min(startY+sliceHeightPx,fullCanvas.height),actualH=endY-startY;
+    if(actualH<=0)break;
+    var sliceCanvas=document.createElement('canvas');
+    sliceCanvas.width=fullCanvas.width;sliceCanvas.height=actualH;
+    var sctx=sliceCanvas.getContext('2d');
+    sctx.fillStyle='#fffef7';sctx.fillRect(0,0,sliceCanvas.width,actualH);
+    sctx.drawImage(fullCanvas,0,startY,fullCanvas.width,actualH,0,0,fullCanvas.width,actualH);
+    var sliceData=sliceCanvas.toDataURL('image/png');
+    if(p>0)pdf.addPage();
+    pdf.setFillColor(255,254,247);pdf.rect(0,0,pageW,pageH,'F');
+    var sH=actualH/pxPerMM;
+    pdf.addImage(sliceData,'PNG',margin,margin,availW,Math.min(sH,availH));
   }
-  if(dpTableHtml) s += esSection('DP Table — dp[i][w] = max(dp[i-1][w], dp[i-1][w-wᵢ] + vᵢ)', 'purple', dpTableHtml);
-
-  var resultCard=document.getElementById('ks-result-card');
-  if(resultCard && resultCard.style.display!=='none'){
-    var maxProfit=document.getElementById('ks-max-profit').textContent;
-    var usedW=document.getElementById('ks-weight-used').textContent;
-    var selDivs=document.getElementById('ks-selected-items').querySelectorAll('.value');
-    var selNames=[]; selDivs.forEach(function(d){selNames.push(d.textContent);});
-    s += esSection('Selected Items', 'teal', selNames.length? esTable(['Selected Item'], selNames.map(function(n){return [n];})) : '<i>No items selected.</i>');
-    s += esFinalAnswer('Maximum Profit', maxProfit + ' &nbsp;(Weight used: '+usedW+' / '+W+')');
-  } else {
-    s += esSection('Result', '', '<i>Run "Solve All at Once" before exporting to see the final selected items and max profit.</i>');
-  }
-
-  s += esSection('Complexity Analysis', 'green', esComplexityGrid([
-    {val:'O(n·W)',lbl:'Time'},{val:'O(n·W)',lbl:'Space'},{val:'Pseudo-poly',lbl:'Nature'}
-  ]));
-  return s;
+  pdf.save(filename);
 }
 
-function esCollect_mst(){
-  var nodes=mstNodes, edges=mstEdges;
-  var s='';
-  s += esSection('Question', '', 'Find the Minimum Spanning Tree (MST) of the given graph using <b>Prim\'s</b> or <b>Kruskal\'s</b> algorithm.');
-
-  s += esSection('Given Graph', 'gold', esTable(
-    ['Edge','Vertex 1','Vertex 2','Weight'],
-    edges.map(function(e,i){ return ['e'+(i+1), nodes[e.a]?nodes[e.a].label:e.a, nodes[e.b]?nodes[e.b].label:e.b, e.w]; })
-  ));
-
-  var img=esCanvasToImg(mstCanvas);
-  if(img) s += esSection('Graph / MST Diagram', 'purple', esDiagramRow([{label:'Graph with MST highlighted', dataUrl:img}]));
-
-  var logEl=document.getElementById('mst-steps-log');
-  var steps=[];
-  if(logEl){ logEl.querySelectorAll('div,p,li').forEach(function(el){ var t=el.textContent.trim(); if(t) steps.push(t); }); }
-  if(steps.length) s += esSection('Step-by-Step Working', 'teal', esStepLog(steps));
-
-  var totalEl=document.getElementById('mst-total-weight');
-  var total=totalEl?totalEl.textContent.trim():'';
-  s += esFinalAnswer('Result', total || 'Run Prim\'s or Kruskal\'s MST before exporting');
-
-  s += esSection('Complexity Analysis', 'green', esComplexityGrid([
-    {val:"O(E log V)",lbl:"Prim's (heap)"},{val:"O(E log E)",lbl:"Kruskal's"},{val:'O(V)',lbl:'Space'}
-  ]));
-  return s;
-}
-
-function esCollect_dijkstra(){
-  var nodes=djkNodes, edges=djkEdges;
-  var src=document.getElementById('djk-source');
-  var srcLabel = (src && nodes[parseInt(src.value)||0]) ? nodes[parseInt(src.value)||0].label : '-';
-  var s='';
-  s += esSection('Question', '', 'Find the shortest distance from source vertex <b>'+esEsc(srcLabel)+'</b> to all other vertices using <b>Dijkstra\'s Algorithm</b>.');
-
-  s += esSection('Given Graph', 'gold', esTable(
-    ['Edge','Vertex 1','Vertex 2','Weight'],
-    edges.map(function(e,i){ return ['e'+(i+1), nodes[e.a]?nodes[e.a].label:e.a, nodes[e.b]?nodes[e.b].label:e.b, e.w]; })
-  ));
-
-  var img=esCanvasToImg(djkCanvas);
-  if(img) s += esSection('Shortest Path Tree Diagram', 'purple', esDiagramRow([{label:'Graph with shortest-path edges highlighted', dataUrl:img}]));
-
-  var logEl=document.getElementById('djk-steps');
-  var steps=[];
-  if(logEl){ logEl.querySelectorAll('div,p,li').forEach(function(el){ var t=el.textContent.trim(); if(t) steps.push(t); }); }
-  if(steps.length) s += esSection('Step-by-Step Relaxation', 'teal', esStepLog(steps));
-
-  // distance table
-  s += esSection('Final Distance Table', 'gold', esTable(
-    ['Vertex','Distance from '+esEsc(srcLabel)],
-    nodes.map(function(n,i){ var d=djkNodeDist[i]; return [n.label, (d===undefined||d===Infinity)?'∞':d]; })
-  ));
-
-  var resEl=document.getElementById('djk-path-result');
-  var res=resEl?resEl.textContent.trim():'';
-  s += esFinalAnswer('Shortest Distances', res || 'Run Dijkstra before exporting');
-
-  s += esSection('Complexity Analysis', 'green', esComplexityGrid([
-    {val:'O((V+E) log V)',lbl:'Time (heap)'},{val:'O(V²)',lbl:'Time (array)'},{val:'O(V)',lbl:'Space'}
-  ]));
-  return s;
-}
-
-function esCollect_bfsdfs(){
-  var nodes=bfsNodes, edges=bfsEdges;
-  var algo=document.getElementById('bfsdfs-algo').value;
-  var startIdx=parseInt(document.getElementById('bfsdfs-start').value)||0;
-  var startLabel=(nodes[startIdx]||{}).label||'-';
-  var algoName = algo==='bfs'?'Breadth-First Search (BFS)':'Depth-First Search (DFS)';
-  var s='';
-  s += esSection('Question', '', 'Traverse the given graph starting from vertex <b>'+esEsc(startLabel)+'</b> using <b>'+algoName+'</b> and list the order of visited vertices.');
-
-  s += esSection('Given Graph', 'gold', esTable(
-    ['Edge','Vertex 1','Vertex 2'],
-    edges.map(function(e,i){ return ['e'+(i+1), nodes[e.a]?nodes[e.a].label:e.a, nodes[e.b]?nodes[e.b].label:e.b]; })
-  ));
-
-  var img=esCanvasToImg(bfsCanvas);
-  if(img) s += esSection('Traversal Diagram', 'purple', esDiagramRow([{label:algoName+' tree edges highlighted', dataUrl:img}]));
-
-  var orderEl=document.getElementById('bfsdfs-order');
-  var order = orderEl ? orderEl.textContent.replace(/\s+/g,' ').trim() : '';
-
-  s += esSection('Working', 'teal', '<p>Using a '+(algo==='bfs'?'Queue':'Stack')+', each unvisited neighbor is discovered and processed in order, producing the traversal sequence below.</p>');
-
-  s += esFinalAnswer(algoName+' Order', order || 'Run the traversal before exporting');
-
-  s += esSection('Complexity Analysis', 'green', esComplexityGrid([
-    {val:'O(V+E)',lbl:'Time'},{val:'O(V)',lbl:'Space'},{val:algo==='bfs'?'Queue':'Stack',lbl:'Data Structure'}
-  ]));
-  return s;
-}
-
-// Generic fallback: captures the tool's first card-title as topic, dumps
-// input/result values found in the DOM into a table, plus a canvas image if present.
-function esCollect_generic(toolIdx, title){
-  var tool=document.getElementById('tool-'+toolIdx);
-  var s='';
-  s += esSection('Topic', '', '<b>'+esEsc(title)+'</b> — GTU 3150703 (Design &amp; Analysis of Algorithms)');
-
-  // Inputs
-  var inputRows=[];
-  tool.querySelectorAll('input, select').forEach(function(el){
-    if(el.type==='checkbox'||el.type==='radio') return;
-    var label='';
-    if(el.id){
-      var lab=tool.querySelector('label[for="'+el.id+'"]');
-      if(lab) label=lab.textContent.trim();
-    }
-    if(!label){
-      var p=el.closest('div');
-      if(p){ var l=p.querySelector('label'); if(l) label=l.textContent.replace(/\s*:?\s*$/,'').trim(); }
-    }
-    var val = el.tagName==='SELECT' ? (el.options[el.selectedIndex]?el.options[el.selectedIndex].text:el.value) : el.value;
-    if(val!==''&&val!==undefined) inputRows.push([label||el.id||'-', val]);
-  });
-  if(inputRows.length) s += esSection('Given Inputs', 'gold', esTable(['Parameter','Value'], inputRows));
-
-  // Canvas diagram
-  var canvases=tool.querySelectorAll('canvas');
-  var images=[];
-  canvases.forEach(function(c,i){
-    var img=esCanvasToImg(c);
-    if(img) images.push({label:'Diagram '+(i+1), dataUrl:img});
-  });
-  if(images.length) s += esSection('Diagram / Visualization', 'purple', esDiagramRow(images.slice(0,2)));
-
-  // Result-ish stat badges / highlighted values
-  var resultRows=[];
-  tool.querySelectorAll('.stat-badge, .viz-stat').forEach(function(b){
-    var val=b.querySelector('.value, .viz-stat-val');
-    var lab=b.querySelector('.label, .viz-stat-label');
-    if(val) resultRows.push([lab?lab.textContent.trim():'-', val.textContent.trim()]);
-  });
-  if(resultRows.length) s += esSection('Working / Statistics', 'teal', esTable(['Metric','Value'], resultRows));
-
-  // Any visible "result" text elements
-  var finalText='';
-  ['ks-max-profit','mst-total-weight','djk-path-result','bfsdfs-order'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el && el.textContent.trim()) finalText += el.textContent.trim()+' ';
-  });
-  s += esFinalAnswer('Result Snapshot', finalText.trim() || 'Run the simulator, then export for a complete snapshot.');
-
-  return s;
-}
-
-var ES_COLLECTORS = {
-  0: function(){ return esCollect_sorting(); },
-  1: function(){ return esCollect_knapsack(); },
-  2: function(){ return esCollect_mst(); },
-  13: function(){ return esCollect_dijkstra(); },
-  9: function(){ return esCollect_bfsdfs(); }
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// MAIN EXPORT ENTRYPOINT
-// ─────────────────────────────────────────────────────────────────────────────
-async function exportToolPDF(toolIdx, title){
-  var overlay=document.getElementById('pdf-export-overlay');
-  var tool=document.getElementById('tool-'+toolIdx);
-  if(!tool){ showToast('Could not find this tool'); return; }
-  if(overlay) overlay.classList.add('show');
-
+// ─── EXPORT: HANDWRITTEN EXAM PDF ─────────────────────────────────────────────
+async function exportHandwrittenPDF(toolIdx,title){
+  var menuEl=document.getElementById('hw-export-menu');if(menuEl)menuEl.remove();
+  var overlay=document.getElementById('pdf-export-overlay');if(overlay)overlay.classList.add('show');
   try{
-    var collector = ES_COLLECTORS[toolIdx];
-    var sectionsHTML = collector ? collector() : esCollect_generic(toolIdx, title);
+    if(document.fonts&&document.fonts.load)await Promise.all([document.fonts.load('16px Kalam'),document.fonts.load('16px Caveat')]).catch(function(){});
+    var sheet=buildExamSheet(toolIdx,title);
+    await renderMultiPagePDF(sheet,title.replace(/[^a-z0-9]+/gi,'_')+'_GTU_Journal.pdf');
+    showToast('✍️ Handwritten Journal PDF exported!','success');
+  }catch(err){console.error(err);showToast('Export failed: '+err.message,'');}
+  finally{if(overlay)overlay.classList.remove('show');}
+}
 
-    var sheet = esBuildSheet('⚡ '+title, 'GTU Exam-Style Solved Answer', sectionsHTML);
-    document.body.appendChild(sheet);
+// ─── EXPORT: VIVA PDF ─────────────────────────────────────────────────────────
+async function exportVivaPDF(toolIdx,title){
+  var menuEl=document.getElementById('hw-export-menu');if(menuEl)menuEl.remove();
+  var overlay=document.getElementById('pdf-export-overlay');if(overlay)overlay.classList.add('show');
+  try{
+    if(document.fonts&&document.fonts.load)await Promise.all([document.fonts.load('16px Kalam'),document.fonts.load('16px Caveat')]).catch(function(){});
+    var meta=ALGO_META[toolIdx];if(!meta){showToast('No metadata for this tool','');return;}
+    var now=new Date();
+    var sheet=document.createElement('div');sheet.className='hw-sheet';
+    sheet.innerHTML='<div class="hw-margin-line"></div>'
+      +'<div class="hw-page-header"><div class="hw-college-name">GTU 3150703 — Viva Preparation: '+hwEsc(title)+'</div>'
+      +'<div class="hw-header-meta"><div>'+now.toLocaleDateString('en-IN')+'</div></div></div>'
+      +'<div class="hw-exp-info">'+hwEsc(meta.exp||'')+'&nbsp;&nbsp;'+hwEsc(title)+'&nbsp;|&nbsp;'+hwEsc(meta.paradigm||'')+'</div>'
+      +'<div class="hw-content">'
+      +hwSectionLabel('VIVA QUESTIONS & ANSWERS')+hwVivaSection(meta)
+      +hwSectionLabel('MARK-WISE ANSWERS')+hwMarkAnswers(meta)
+      +hwSectionLabel('COMPLEXITY ANALYSIS')+hwComplexityTable(meta.complexity)
+      +hwSectionLabel('APPLICATIONS')+hwBulletList(meta.applications,'#1565c0')
+      +hwSectionLabel('CONCLUSION')+hwParagraph(meta.conclusion)
+      +'</div><div class="hw-page-footer"><span>⚡ ADA Algorithm Lab — Viva Prep</span><span>'+now.toLocaleDateString('en-IN')+'</span></div>';
+    await renderMultiPagePDF(sheet,title.replace(/[^a-z0-9]+/gi,'_')+'_Viva_Prep.pdf');
+    showToast('🎓 Viva Prep PDF exported!','success');
+  }catch(err){showToast('Export failed: '+err.message,'');}
+  finally{if(overlay)overlay.classList.remove('show');}
+}
 
-    // allow layout to settle before capture
-    await new Promise(function(r){ setTimeout(r, 60); });
+// ─── EXPORT: VISUALIZATION PDF ────────────────────────────────────────────────
+async function exportVisualizationPDF(toolIdx,title){
+  var menuEl=document.getElementById('hw-export-menu');if(menuEl)menuEl.remove();
+  var overlay=document.getElementById('pdf-export-overlay');if(overlay)overlay.classList.add('show');
+  try{
+    var meta=ALGO_META[toolIdx];
+    var tool=document.getElementById('tool-'+toolIdx),canvases=tool?tool.querySelectorAll('canvas'):[];
+    var now=new Date();
+    var sheet=document.createElement('div');sheet.className='hw-sheet';
+    var cHtml='';
+    canvases.forEach(function(c){if(c.width>50){try{var cv=document.createElement('canvas');cv.width=c.width;cv.height=c.height;var ctx=cv.getContext('2d');ctx.fillStyle='#0a0e1a';ctx.fillRect(0,0,cv.width,cv.height);ctx.drawImage(c,0,0);cHtml+='<div class="hw-canvas-img"><img src="'+cv.toDataURL('image/png')+'" style="max-width:100%;border-radius:6px;margin-bottom:10px"></div>';}catch(e){}}});
+    if(!cHtml)cHtml=hwParagraph('Run the simulator first to capture visualization.');
+    sheet.innerHTML='<div class="hw-margin-line"></div>'
+      +'<div class="hw-page-header"><div class="hw-college-name">ADA Lab — Visualization: '+hwEsc(title)+'</div><div class="hw-header-meta"><div>'+now.toLocaleDateString('en-IN')+'</div></div></div>'
+      +'<div class="hw-content">'
+      +hwSectionLabel('VISUALIZATION')+cHtml
+      +(meta?hwSectionLabel('COMPLEXITY ANALYSIS')+hwComplexityTable(meta.complexity):'')
+      +(meta?hwSectionLabel('APPLICATIONS')+hwBulletList(meta.applications,'#1565c0'):'')
+      +(meta?hwSectionLabel('VIVA QUESTIONS')+hwVivaSection(meta):'')
+      +'</div><div class="hw-page-footer"><span>⚡ ADA Algorithm Lab</span><span>'+now.toLocaleDateString('en-IN')+'</span></div>';
+    await renderMultiPagePDF(sheet,title.replace(/[^a-z0-9]+/gi,'_')+'_Visualization.pdf');
+    showToast('📊 Visualization PDF exported!','success');
+  }catch(err){showToast('Export failed: '+err.message,'');}
+  finally{if(overlay)overlay.classList.remove('show');}
+}
 
-    var canvas = await html2canvas(sheet, {backgroundColor:'#ffffff', scale:2, useCORS:true, logging:false});
-    var imgData = canvas.toDataURL('image/png');
-
-    var { jsPDF } = window.jspdf;
-    var pdf = new jsPDF('p','mm','a4');
-    var pageW = pdf.internal.pageSize.getWidth();
-    var pageH = pdf.internal.pageSize.getHeight();
-    var margin = 6;
-
-    var imgW = pageW - margin*2;
-    var imgH = canvas.height*imgW/canvas.width;
-
-    if(imgH > pageH - margin*2){
-      imgH = pageH - margin*2;
-      imgW = canvas.width*imgH/canvas.height;
-    }
-    var x=(pageW-imgW)/2, y=margin;
-
-    pdf.setFillColor(255,255,255);
-    pdf.rect(0,0,pageW,pageH,'F');
-    pdf.addImage(imgData,'PNG',x,y,imgW,imgH);
-
-    var safeName=title.replace(/[^a-z0-9]+/gi,'_').replace(/^_+|_+$/g,'');
-    pdf.save(safeName+'_GTU_Solution.pdf');
-    showToast(title+' — exam answer PDF exported!','success');
-
-    document.body.removeChild(sheet);
-  }catch(err){
-    console.error(err);
-    showToast('PDF export failed: '+err.message);
-  }finally{
-    if(overlay) overlay.classList.remove('show');
-  }
+// ─── MAIN ENTRY POINT ─────────────────────────────────────────────────────────
+function exportToolPDF(toolIdx,title){
+  showExportMenu(toolIdx,title);
 }
 
 </script>
